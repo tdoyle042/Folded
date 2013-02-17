@@ -1,0 +1,1 @@
+/* Javascript for the client home page */
