@@ -17,19 +17,11 @@ app.get("/static/:staticFilename", function (request, response) {
 });
 
 app.post("/saveImage",function (request,response) {
-	console.log("Got request");
 
-	image = request.body.image
-	fs.writeFile("image.jpeg",image,function(err){
-		if(err) throw err;
-		console.log("saved file!");
-		response.send({sucess:true});
-	});
 });
 
 app.get("/getImage",function(request,response) {
-	console.log("get image!");
-	response.send({"image": image,sucess:true});
+
 });
 
 //API Requests
