@@ -19,9 +19,8 @@ app.get("/static/:staticFilename", function (request, response) {
 app.post("/saveImage",function (request,response) {
 	console.log("Got request");
 
-	var myimage = new Buffer(request.body.image,'base64');
-	image = myimage;
-	fs.writeFile("image.jpeg",myimage,function(err){
+	image = request.body.image
+	fs.writeFile("image.jpeg",image,function(err){
 		if(err) throw err;
 		console.log("saved file!");
 		response.send({sucess:true});
