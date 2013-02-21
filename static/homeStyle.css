@@ -1,5 +1,7 @@
 /* CSS file for our app */
-
+*{
+	-webkit-user-select: none;
+}
 body {
 	font-family: "Helvetica Neue", Helvetica, sans-serif;
 	text-align:center; 
@@ -9,8 +11,24 @@ body {
 }
 
 canvas {
+	
 	width:500px;
 	height:300px;
 	box-shadow:0px 2px 15px 1px rgba(0,0,0,0.5); 
 	background-color: white;
+	position:absolute;
+	left:37%;
 }
+
+.slider{
+	-webkit-user-select: none;
+	/*margin-right: 20px;*/
+	width:25px;
+	height:300px;
+	margin-left:20px;
+	position:relative;
+	left:-20%;
+	
+}
+
+
