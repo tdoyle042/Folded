@@ -4,9 +4,38 @@ var app = express();
 var fs = require('fs');
 app.use(express.bodyParser());
 
+<<<<<<< HEAD
 var images = [];
 var users = new Object();
 var games = [];
+=======
+var images;
+
+// Asynchronously read file contents, then call callbackFn
+function readFile(filename, defaultData, callbackFn) {
+  fs.readFile(filename, function(err, data) {
+    if (err) {
+      console.log("Error reading file: ", filename);
+      data = defaultData;
+    } else {
+      console.log("Success reading file: ", filename);
+    }
+    if (callbackFn) callbackFn(err, data);
+  });
+}
+
+// Asynchronously write file contents, then call callbackFn
+function writeFile(filename, data, callbackFn) {
+  fs.writeFile(filename, data, function(err) {
+    if (err) {
+      console.log("Error writing file: ", filename);
+    } else {
+      console.log("Success writing file: ", filename);
+    }
+    if (callbackFn) callbackFn(err);
+  });
+}
+>>>>>>> d0a4f12b242b4149e646e2b21b6cf392c90280ca
 
 //Routes to serve web pages
 app.get("/",function(request,response) {
@@ -18,6 +47,7 @@ app.get("/static/:staticFilename", function (request, response) {
     response.sendfile("static/" + request.params.staticFilename);
 });
 
+<<<<<<< HEAD
 app.get("/share/:id", function (request,response) {
 	var imageID = request.params.id;
 	if(imageID >= 0 && imageID < images.length){
@@ -37,12 +67,6 @@ app.post("/saveImage", function (request,response) {
 	var imageData = request.body.imageData;
 
 	games[gameID][imageID] = imageData;
-//gets all saved images
-app.get("/images",function(request,response) {
-	response.send({
-		images: images,
-		success: true
-	});
 });
 
 app.post("/login", function (request,response) {
@@ -53,24 +77,6 @@ app.post("/login", function (request,response) {
 		response.send({sucess : true});
 	else
 		response.send({sucess : false});
-//posts the images you're currently saving
-app.post("/images",function (request,response) {
-	console.log("trace5");
-	console.log(request.body);
-	var item = { "recordedMovements": request.body.recordedMovements};
-	var successful = (item.recordedMovements !== undefined);
-	if (successful) {
-		images.push(item);
-		writeFile("images.txt", JSON.stringify(images));
-	}
-	else {
-		console.log("whoops");
-		item = undefined;
-	}
-	response.send({
-		item: item,
-		success: successful
-	});
 });
 
 app.get("/register", function (request,response) {
@@ -103,6 +109,34 @@ app.post("/register", function (request,response) {
 
 app.get("/users", function (request,response) {
 	response.send({data : users, sucess : true});
+=======
+//gets all saved images
+app.get("/images",function(request,response) {
+	response.send({
+		images: images,
+		success: true
+	});
+});
+
+//posts the images you're currently saving
+app.post("/images",function (request,response) {
+	console.log("trace5");
+	console.log(request.body);
+	var item = { "recordedMovements": request.body.recordedMovements};
+	var successful = (item.recordedMovements !== undefined);
+	if (successful) {
+		images.push(item);
+		writeFile("images.txt", JSON.stringify(images));
+	}
+	else {
+		console.log("whoops");
+		item = undefined;
+	}
+	response.send({
+		item: item,
+		success: successful
+	});
+>>>>>>> d0a4f12b242b4149e646e2b21b6cf392c90280ca
 });
 
 // app.get("/getImage", function (request,response) {
@@ -191,6 +225,20 @@ function authUser(username,password) {
 		return false;
 }
 
+<<<<<<< HEAD
 initServer();
+=======
+
+function initServer() {
+  // When we start the server, we must load the stored data
+  var defaultList = "[]";
+  readFile("images.txt", defaultList, function(err, data) {
+    //console.log(data);
+	images = JSON.parse(data);
+  });
+}
+
+initServer();  
+>>>>>>> d0a4f12b242b4149e646e2b21b6cf392c90280ca
 app.listen("3000");
 console.log("Listening at 3000");
