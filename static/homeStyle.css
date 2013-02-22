@@ -31,7 +31,7 @@ canvas {
 	
 }
 
-#clear_canvas, #loadRecordedDrawings {
+#clear_canvas, #loadRecordedDrawings, #saveRecordedDrawings {
 
   position: absolute;
   top: 460px;
@@ -41,5 +41,11 @@ canvas {
 #clear_canvas {
   
   left: 600px;
+
+}
+
+#saveRecordedDrawings  {
+  
+  left: 800px;
 
 }
