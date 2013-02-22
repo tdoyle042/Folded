@@ -7,18 +7,30 @@ canvas.addEventListener('mouseup', onMouseUp, false);
 canvas.addEventListener('mousemove', onMouseMove, false); 
 canvas.addEventListener ("mouseout", onMouseOut, false);
 
+var recordedMovements = [];
 
-/*
-function draw_line(start_x, start_y, end_x, end_y) {
+function clearCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
 
-	ctx.strokeStyle = "#0000FF";
-	ctx.beginPath();
-	ctx.moveTo(start_x, start_y);
-	ctx.lineTo(end_x, end_y);
-	ctx.stroke();
-	ctx.moveTo(end_x, end_y);
-
-}*/
+function loadRecordedDrawings() {
+  for (var i = 0; i < recordedMovements.length; i++) { 
+    var movement = recordedMovements[i];
+    var x = movement["x"];
+    var y = movement["y"];
+    if (movement["event"] === "MouseDown") {
+      ctx.moveTo(x, y);
+    }
+    else {
+      var color = movement["color"];
+      ctx.lineTo(x,y);
+      ctx.strokeStyle = color;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(x,y);
+    }
+  }
+}
 
 function onMouseDown(event){
 	//console.log("trace2");
@@ -26,6 +38,11 @@ function onMouseDown(event){
 	var y = event.pageY - canvas.offsetTop;
 	ctx.moveTo(x, y);
 	drawing = true;	
+  var firstClickInfo = new Object();
+  firstClickInfo["x"] = x;
+  firstClickInfo["y"] = y;
+  firstClickInfo["event"] = "MouseDown";
+  recordedMovements.push(firstClickInfo);
 }
 
 function onMouseMove(event){
@@ -37,7 +54,7 @@ function onMouseMove(event){
 		//ctx.fillStyle = "#000000";
 		canvas.mixed_color = "rgb(" + slider1.color_val + "," + slider2.color_val + "," + slider3.color_val + ")";
 
-		ctx.lineTo(x,y);
+    ctx.lineTo(x,y);
 		//console.log(ctx.strokeStyle);
 		ctx.strokeStyle = canvas.mixed_color;
 		console.log(canvas.mixed_color);
@@ -45,6 +62,20 @@ function onMouseMove(event){
 		ctx.beginPath();
 		ctx.moveTo(x,y);
 		
+    var drawingRecord = new Object();
+    drawingRecord["x"] = x;
+    drawingRecord["y"] = y; 
+    drawingRecord["color"] = canvas.mixed_color;
+    drawingRecord["event"] = "MouseMove";
+    recordedMovements.push(drawingRecord);
+
+    /*for (var i = 0; i < recordedMovements.length; i++) {
+      var movement = recordedMovements[i];
+      var i_x = movement["x"];
+      var i_y = movement["y"];
+      var i_color = movement["color"];
+      console.log(i_x, i_y, i_color);
+    }*/    
 	}
 }
 
