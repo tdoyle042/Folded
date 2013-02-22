@@ -37,11 +37,33 @@ app.post("/saveImage", function (request,response) {
 	var imageData = request.body.imageData;
 
 	games[gameID][imageID] = imageData;
+}
+
 //gets all saved images
 app.get("/images",function(request,response) {
 	response.send({
 		images: images,
 		success: true
+	});
+});
+
+//posts the images you're currently saving
+app.post("/images",function (request,response) {
+	console.log("trace5");
+	console.log(request.body);
+	var item = { "recordedMovements": request.body.recordedMovements};
+	var successful = (item.recordedMovements !== undefined);
+	if (successful) {
+		images.push(item);
+		saveImages();
+	}
+	else {
+		console.log("whoops");
+		item = undefined;
+	}
+	response.send({
+		item: item,
+		success: successful
 	});
 });
 
@@ -53,25 +75,9 @@ app.post("/login", function (request,response) {
 		response.send({sucess : true});
 	else
 		response.send({sucess : false});
-//posts the images you're currently saving
-app.post("/images",function (request,response) {
-	console.log("trace5");
-	console.log(request.body);
-	var item = { "recordedMovements": request.body.recordedMovements};
-	var successful = (item.recordedMovements !== undefined);
-	if (successful) {
-		images.push(item);
-		writeFile("images.txt", JSON.stringify(images));
-	}
-	else {
-		console.log("whoops");
-		item = undefined;
-	}
-	response.send({
-		item: item,
-		success: successful
-	});
-});
+}
+
+
 
 app.get("/register", function (request,response) {
 	response.sendfile("static/register.html");
