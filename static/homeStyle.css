@@ -31,4 +31,15 @@ canvas {
 	
 }
 
+#clear_canvas, #loadRecordedDrawings {
 
+  position: absolute;
+  top: 460px;
+
+}
+
+#clear_canvas {
+  
+  left: 600px;
+
+}
