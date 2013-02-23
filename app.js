@@ -10,7 +10,7 @@ var games = [];
 
 //Routes to serve web pages
 app.get("/",function(request,response) {
-	// response.sendfile("static/home.html");
+	//response.sendfile("static/home.html");
 	response.sendfile("static/welcome.html");
 });
 
@@ -23,11 +23,11 @@ app.get("/share/:id", function (request,response) {
 	if(imageID >= 0 && imageID < images.length){
 		response.send({
 						image: images[imageID],
-						sucess: true
+						success: true
 					});
 	}
 	else {
-		response.send({sucess:false});
+		response.send({success:false});
 	}
 });
 
@@ -35,12 +35,11 @@ app.post("/saveImage", function (request,response) {
 	var gameID = request.game.id;
 	var imageID = request.body.id;
 	var imageData = request.body.imageData;
-
 	games[gameID][imageID] = imageData;
 });
 
 //gets all saved images
-app.get("/images",function(request,response) {
+app.get("/images", function(request,response) {
 	response.send({
 		images: images,
 		success: true
@@ -49,16 +48,17 @@ app.get("/images",function(request,response) {
 
 //posts the images you're currently saving
 app.post("/images",function (request,response) {
-	console.log("trace5");
-	console.log(request.body);
+	////console.log("trace5");
+	////console.log(request.body);
+	//console.log(images);
 	var item = { "recordedMovements": request.body.recordedMovements};
 	var successful = (item.recordedMovements !== undefined);
 	if (successful) {
-		images.push(item);
+		images.imageList.push(item);
 		saveImages();
 	}
 	else {
-		console.log("whoops");
+		//console.log("whoops");
 		item = undefined;
 	}
 	response.send({
@@ -67,14 +67,27 @@ app.post("/images",function (request,response) {
 	});
 });
 
-app.get("/login", function (request,response) {
+app.post("/login", function (request,response) {
+	//console.log('test');
 	var recievedUsername = request.body.username;
 	var recievedPassword = request.body.password;
-
-	if(authUser(recievedUsername,recievedPassword))
-		response.send({sucess : true});
-	else
-		response.send({sucess : false});
+	/*if(authUser(recievedUsername,recievedPassword)){
+		//console.log('win!');
+	}
+	else{
+		//console.log('well shit');
+	}*/
+	if(authUser(recievedUsername,recievedPassword)) {
+		//response.send({success : true});
+		// go to home, maybe make a game?
+		////console.log("woah");
+		response.sendfile("static/home.html");
+		//window.location = window.location.host + "static/home.html";
+	}
+	else {
+		////console.log("failed");
+		response.send({success : false});
+	} 
 });
 
 
@@ -84,7 +97,7 @@ app.get("/register", function (request,response) {
 });
 
 app.post("/register", function (request,response) {
-	console.log("Reques to register user recieved!");
+	//console.log("Request to register user recieved!");
 
 	var recievedUsername = request.body.username;
 	var recievedPassword = request.body.password;
@@ -97,18 +110,18 @@ app.post("/register", function (request,response) {
 		newUser["name"] = recievedName;
 		users[recievedUsername] = newUser;
 		saveUsers();
-		console.log("Created the user!");
-		response.send({sucess : true});
+		//console.log("Created the user!");
+		response.send({success : true});
 	}
 	else {
-		console.log("Username taken!");
+		//console.log("Username taken!");
 		response.statusCode = 300;
 		response.send("Error: Username Taken!");
 	}
 });
 
 app.get("/users", function (request,response) {
-	response.send({data : users, sucess : true});
+	response.send({data : users, success : true});
 });
 
 // app.get("/getImage", function (request,response) {
@@ -120,6 +133,7 @@ function initServer() {
 }
 
 function readData() {
+	////console.log('getting users...');
 	fs.readFile("users.txt",function(err,data) {
 		if(err) {
 			console.log("Error Reading Users");
@@ -130,18 +144,19 @@ function readData() {
 			users = JSON.parse(data);
 		}
 	});
-
+	////console.log('getting images...');
 	fs.readFile("images.txt",function(err,data) {
 		if(err) {
 			console.log("Error Reading Images");
 			images = new Object();
+			images.imageList = [];
 			saveImages();
 		}
 		else {
 			images = JSON.parse(data);
 		}
 	});
-
+	////console.log('getting games...');
 	fs.readFile("games.txt",function(err,data) {
 		if(err) {
 			console.log("Error Reading Games");
@@ -161,7 +176,7 @@ function saveImages() {
 			console.log("Error writing Images to Disk");
 		}
 		else {
-			console.log("Wrote Users to Disk");
+			console.log("Wrote Images to Disk");
 		}
 	});
 }

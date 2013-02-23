@@ -4,42 +4,13 @@ var app = express();
 var fs = require('fs');
 app.use(express.bodyParser());
 
-<<<<<<< HEAD
 var images = [];
 var users = new Object();
 var games = [];
-=======
-var images;
-
-// Asynchronously read file contents, then call callbackFn
-function readFile(filename, defaultData, callbackFn) {
-  fs.readFile(filename, function(err, data) {
-    if (err) {
-      console.log("Error reading file: ", filename);
-      data = defaultData;
-    } else {
-      console.log("Success reading file: ", filename);
-    }
-    if (callbackFn) callbackFn(err, data);
-  });
-}
-
-// Asynchronously write file contents, then call callbackFn
-function writeFile(filename, data, callbackFn) {
-  fs.writeFile(filename, data, function(err) {
-    if (err) {
-      console.log("Error writing file: ", filename);
-    } else {
-      console.log("Success writing file: ", filename);
-    }
-    if (callbackFn) callbackFn(err);
-  });
-}
->>>>>>> d0a4f12b242b4149e646e2b21b6cf392c90280ca
 
 //Routes to serve web pages
 app.get("/",function(request,response) {
-	// response.sendfile("static/home.html");
+	//response.sendfile("static/home.html");
 	response.sendfile("static/welcome.html");
 });
 
@@ -47,17 +18,16 @@ app.get("/static/:staticFilename", function (request, response) {
     response.sendfile("static/" + request.params.staticFilename);
 });
 
-<<<<<<< HEAD
 app.get("/share/:id", function (request,response) {
 	var imageID = request.params.id;
 	if(imageID >= 0 && imageID < images.length){
 		response.send({
 						image: images[imageID],
-						sucess: true
+						success: true
 					});
 	}
 	else {
-		response.send({sucess:false});
+		response.send({success:false});
 	}
 });
 
@@ -65,11 +35,40 @@ app.post("/saveImage", function (request,response) {
 	var gameID = request.game.id;
 	var imageID = request.body.id;
 	var imageData = request.body.imageData;
-
 	games[gameID][imageID] = imageData;
 });
 
-app.post("/login", function (request,response) {
+//gets all saved images
+app.get("/images", function(request,response) {
+	response.send({
+		images: images,
+		success: true
+	});
+});
+
+//posts the images you're currently saving
+app.post("/images",function (request,response) {
+	////console.log("trace5");
+	////console.log(request.body);
+	//console.log(images);
+	var item = { "recordedMovements": request.body.recordedMovements};
+	var successful = (item.recordedMovements !== undefined);
+	if (successful) {
+		images.imageList.push(item);
+		saveImages();
+	}
+	else {
+		//console.log("whoops");
+		item = undefined;
+	}
+	response.send({
+		item: item,
+		success: successful
+	});
+});
+
+<<<<<<< HEAD
+app.get("/login", function (request,response) {
 	var recievedUsername = request.body.username;
 	var recievedPassword = request.body.password;
 
@@ -77,14 +76,39 @@ app.post("/login", function (request,response) {
 		response.send({sucess : true});
 	else
 		response.send({sucess : false});
+=======
+app.post("/login", function (request,response) {
+	//console.log('test');
+	var recievedUsername = request.body.username;
+	var recievedPassword = request.body.password;
+	/*if(authUser(recievedUsername,recievedPassword)){
+		//console.log('win!');
+	}
+	else{
+		//console.log('well shit');
+	}*/
+	if(authUser(recievedUsername,recievedPassword)) {
+		//response.send({success : true});
+		// go to home, maybe make a game?
+		////console.log("woah");
+		response.sendfile("static/home.html");
+		//window.location = window.location.host + "static/home.html";
+	}
+	else {
+		////console.log("failed");
+		response.send({success : false});
+	} 
+>>>>>>> 9c28e7ccd80e4cac063c83c7ba76ff64198f3a3f
 });
+
+
 
 app.get("/register", function (request,response) {
 	response.sendfile("static/register.html");
 });
 
 app.post("/register", function (request,response) {
-	console.log("Reques to register user recieved!");
+	//console.log("Request to register user recieved!");
 
 	var recievedUsername = request.body.username;
 	var recievedPassword = request.body.password;
@@ -97,46 +121,18 @@ app.post("/register", function (request,response) {
 		newUser["name"] = recievedName;
 		users[recievedUsername] = newUser;
 		saveUsers();
-		console.log("Created the user!");
-		response.send({sucess : true});
+		//console.log("Created the user!");
+		response.send({success : true});
 	}
 	else {
-		console.log("Username taken!");
+		//console.log("Username taken!");
 		response.statusCode = 300;
 		response.send("Error: Username Taken!");
 	}
 });
 
 app.get("/users", function (request,response) {
-	response.send({data : users, sucess : true});
-=======
-//gets all saved images
-app.get("/images",function(request,response) {
-	response.send({
-		images: images,
-		success: true
-	});
-});
-
-//posts the images you're currently saving
-app.post("/images",function (request,response) {
-	console.log("trace5");
-	console.log(request.body);
-	var item = { "recordedMovements": request.body.recordedMovements};
-	var successful = (item.recordedMovements !== undefined);
-	if (successful) {
-		images.push(item);
-		writeFile("images.txt", JSON.stringify(images));
-	}
-	else {
-		console.log("whoops");
-		item = undefined;
-	}
-	response.send({
-		item: item,
-		success: successful
-	});
->>>>>>> d0a4f12b242b4149e646e2b21b6cf392c90280ca
+	response.send({data : users, success : true});
 });
 
 // app.get("/getImage", function (request,response) {
@@ -148,6 +144,7 @@ function initServer() {
 }
 
 function readData() {
+	////console.log('getting users...');
 	fs.readFile("users.txt",function(err,data) {
 		if(err) {
 			console.log("Error Reading Users");
@@ -158,18 +155,19 @@ function readData() {
 			users = JSON.parse(data);
 		}
 	});
-
+	////console.log('getting images...');
 	fs.readFile("images.txt",function(err,data) {
 		if(err) {
 			console.log("Error Reading Images");
 			images = new Object();
+			images.imageList = [];
 			saveImages();
 		}
 		else {
 			images = JSON.parse(data);
 		}
 	});
-
+	////console.log('getting games...');
 	fs.readFile("games.txt",function(err,data) {
 		if(err) {
 			console.log("Error Reading Games");
@@ -189,7 +187,7 @@ function saveImages() {
 			console.log("Error writing Images to Disk");
 		}
 		else {
-			console.log("Wrote Users to Disk");
+			console.log("Wrote Images to Disk");
 		}
 	});
 }
@@ -225,20 +223,6 @@ function authUser(username,password) {
 		return false;
 }
 
-<<<<<<< HEAD
 initServer();
-=======
-
-function initServer() {
-  // When we start the server, we must load the stored data
-  var defaultList = "[]";
-  readFile("images.txt", defaultList, function(err, data) {
-    //console.log(data);
-	images = JSON.parse(data);
-  });
-}
-
-initServer();  
->>>>>>> d0a4f12b242b4149e646e2b21b6cf392c90280ca
 app.listen("3000");
 console.log("Listening at 3000");
