@@ -48,9 +48,6 @@ app.get("/images", function(request,response) {
 
 //posts the images you're currently saving
 app.post("/images",function (request,response) {
-	////console.log("trace5");
-	////console.log(request.body);
-	//console.log(images);
 	var item = { "recordedMovements": request.body.recordedMovements};
 	var successful = (item.recordedMovements !== undefined);
 	if (successful) {
@@ -68,26 +65,20 @@ app.post("/images",function (request,response) {
 });
 
 app.post("/login", function (request,response) {
-	//console.log('test');
 	var recievedUsername = request.body.username;
 	var recievedPassword = request.body.password;
-	/*if(authUser(recievedUsername,recievedPassword)){
-		//console.log('win!');
-	}
-	else{
-		//console.log('well shit');
-	}*/
 	if(authUser(recievedUsername,recievedPassword)) {
-		//response.send({success : true});
-		// go to home, maybe make a game?
-		////console.log("woah");
-		response.sendfile("static/home.html");
-		//window.location = window.location.host + "static/home.html";
+		// response.send({success : true});
+		response.send({success : true});
 	}
 	else {
 		////console.log("failed");
 		response.send({success : false});
 	} 
+});
+
+app.get("/home",function(request,response) {
+	response.sendfile("static/home.html");
 });
 
 
