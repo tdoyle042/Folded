@@ -17,11 +17,11 @@ function createAccount() {
 			"realName" : name
 		},
 		error : function (error) {
-			console.log(error);
+			//console.log(error);
 			$("#errors").html("" + error.responseText);
 		},
-		sucess : function (data) {
-			console.log("Created Account!");
+		success : function (data) {
+			//console.log("Created Account!");
 		},
 	});
 }

@@ -27,16 +27,17 @@ function clearCanvas() {
 }
 
 function add(){
+	console.log(images);
 	//get();
 	if (recordedMovements === []) return;
-	console.log("trace6");
+	//console.log("trace6");
 	$.ajax({
 		type: "post",
 		data: {"recordedMovements": recordedMovements},
 		url: "/images",
 		success: function(data) { }
 	});
-	//console.log("trace9");
+	////console.log("trace9");
 }
 
 function saveImage() {
@@ -46,17 +47,17 @@ function saveImage() {
 
 function loadRecordedDrawings() {
   clearCanvas();
-  console.log("Loading...");
-  /*console.log(images);
+  //console.log("Loading...");
+  /*//console.log(images);
   get();
-  console.log(images);*/
+  //console.log(images);*/
   if (images === undefined) return ;
-  console.log("trace10");
+  //console.log("trace10");
   var this_image = images[images.length - 1];
   recordedMovements = this_image["recordedMovements"];
-  console.log("attempt: " + recordedMovements.length);
+  //console.log("attempt: " + recordedMovements.length);
   for (var i = 0; i < recordedMovements.length; i++) { 
-    //console.log(i);
+    ////console.log(i);
 	var movement = recordedMovements[i];
     var x = movement["x"];
     var y = movement["y"];
@@ -75,7 +76,7 @@ function loadRecordedDrawings() {
 }
 
 function onMouseDown(event){
-	//console.log("trace2");
+	////console.log("trace2");
 	var x = event.pageX - canvas.offsetLeft;
 	var y = event.pageY - canvas.offsetTop;
 	ctx.moveTo(x, y);
@@ -90,16 +91,16 @@ function onMouseDown(event){
 function onMouseMove(event){
 	
 	if (drawing) {
-		//console.log("trace3");
+		////console.log("trace3");
 		var x = event.pageX - canvas.offsetLeft;
 		var y = event.pageY - canvas.offsetTop;
 		//ctx.fillStyle = "#000000";
 		canvas.mixed_color = "rgb(" + slider1.color_val + "," + slider2.color_val + "," + slider3.color_val + ")";
 
 		ctx.lineTo(x,y);
-		//console.log(ctx.strokeStyle);
+		////console.log(ctx.strokeStyle);
 		ctx.strokeStyle = canvas.mixed_color;
-		//console.log(canvas.mixed_color);
+		////console.log(canvas.mixed_color);
 		ctx.stroke();
 		ctx.beginPath();
 		ctx.moveTo(x,y);
@@ -116,7 +117,7 @@ function onMouseMove(event){
 		  var i_x = movement["x"];
 		  var i_y = movement["y"];
 		  var i_color = movement["color"];
-		  console.log(i_x, i_y, i_color);
+		  //console.log(i_x, i_y, i_color);
 		}*/    
 	}
 }
