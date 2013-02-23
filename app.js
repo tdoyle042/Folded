@@ -37,7 +37,7 @@ app.post("/saveImage", function (request,response) {
 	var imageData = request.body.imageData;
 
 	games[gameID][imageID] = imageData;
-}
+});
 
 //gets all saved images
 app.get("/images",function(request,response) {
@@ -67,7 +67,7 @@ app.post("/images",function (request,response) {
 	});
 });
 
-app.post("/login", function (request,response) {
+app.get("/login", function (request,response) {
 	var recievedUsername = request.body.username;
 	var recievedPassword = request.body.password;
 
@@ -75,7 +75,7 @@ app.post("/login", function (request,response) {
 		response.send({sucess : true});
 	else
 		response.send({sucess : false});
-}
+});
 
 
 

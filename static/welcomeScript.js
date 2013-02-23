@@ -8,12 +8,12 @@ $(document).ready(function() {
 
 function login(username,password) {
 	$.ajax({
-		type : "post",
+		type : "get",
 		url : "/login",
 		data : {"username" : username,
 				"password" : password},
 		sucess : function(data) {
-			console.log("Sucess!");
+			alert("success!");
 		},
 		fail : function(data) {
 			alert("fail!!");
