@@ -1,6 +1,7 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var drawing = false;
+var saved_commands = [];
 
 canvas.addEventListener('mousedown', onMouseDown, false); 
 canvas.addEventListener('mouseup', onMouseUp, false); 
@@ -57,6 +58,7 @@ function onMouseDown(event){
 function onMouseMove(event){
 	
 	if (drawing) {
+		saved_commands = [];
 		var x = event.pageX - canvas.offsetLeft;
 		var y = event.pageY - canvas.offsetTop;
 		canvas.mixed_color = "rgb(" + slider1.color_val + "," + slider2.color_val + "," + slider3.color_val + ")";
