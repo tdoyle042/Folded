@@ -15,14 +15,14 @@ function get() {
       type: "get",
       url: "/images",
       success: function(data) {
-        images = data.images;
+        images = images;
       }
     });
 }
 
 function clearCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  var recordedMovements = [];
+  recordedMovements = [];
   get();
 }
 
@@ -43,36 +43,6 @@ function add(){
 function saveImage() {
 	add();
 	get();
-}
-
-function loadRecordedDrawings() {
-  clearCanvas();
-  //console.log("Loading...");
-  /*//console.log(images);
-  get();
-  //console.log(images);*/
-  if (images === undefined) return ;
-  //console.log("trace10");
-  var this_image = images[images.length - 1];
-  recordedMovements = this_image["recordedMovements"];
-  //console.log("attempt: " + recordedMovements.length);
-  for (var i = 0; i < recordedMovements.length; i++) { 
-    ////console.log(i);
-	var movement = recordedMovements[i];
-    var x = movement["x"];
-    var y = movement["y"];
-    if (movement["event"] === "MouseDown") {
-      ctx.moveTo(x, y);
-    }
-    else {
-      var color = movement["color"];
-      ctx.lineTo(x,y);
-      ctx.strokeStyle = color;
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(x,y);
-    }
-  }
 }
 
 function onMouseDown(event){
@@ -130,6 +100,33 @@ function onMouseUp(event){
 function onMouseOut(event){
 	drawing = false;
 }
+
+function final_merge(){
+	var user = "ben";
+	var gameID = "0"; //placeholder variables
+	//window.location = "/static/final_image/" + gameID;
+	console.log("trace2");
+	window.location = "/static/final_image_page.html";
+	console.log("almost...");
+	merge_images();
+	/*var url_foo = "/static/finalImage";
+	$.ajax({
+		type: "get",
+		url: url_foo,
+		//data: { "id" : 1},
+		success: function(url) {
+					console.log("trace3");
+					window.location = url;
+					merge_images();
+		}, 
+		error: function(){
+			console.log("url: " + url_foo);
+		}
+	});*/
+}
+				
+	//window.location = "/share/final_image/" + gameID;
+	
 
 $(document).ready(function() {
     get();
