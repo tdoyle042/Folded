@@ -19,9 +19,9 @@ app.get("/static/:staticFilename", function (request, response) {
 });
 
 //app.get("/share/:id", function (request,response) {
-
 //app.get("/static/final_image/:gameID", function (request,response) {
-app.get("/static/finalImage", function (request,response) {
+
+app.get("/share/:userID/:gameID", function (request,response) {
 	console.log("trace1");
 	//console.log(arguments[0]);
 	response.sendfile("static/final_image_page.html");

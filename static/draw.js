@@ -102,13 +102,15 @@ function onMouseOut(event){
 }
 
 function final_merge(){
-	var user = "ben";
+	var userID = "ben";
 	var gameID = "0"; //placeholder variables
 	//window.location = "/static/final_image/" + gameID;
 	console.log("trace2");
-	window.location = "/static/final_image_page.html";
-	console.log("almost...");
+	window.location = "/share/" + userID + "/" + gameID;
+	//console.log("almost...");
 	merge_images();
+	
+	
 	/*var url_foo = "/static/finalImage";
 	$.ajax({
 		type: "get",
