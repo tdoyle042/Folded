@@ -28,16 +28,13 @@ function clearCanvas() {
 
 function add(){
 	console.log(images);
-	//get();
 	if (recordedMovements === []) return;
-	//console.log("trace6");
 	$.ajax({
 		type: "post",
 		data: {"recordedMovements": recordedMovements},
 		url: "/images",
 		success: function(data) { }
 	});
-	////console.log("trace9");
 }
 
 function saveImage() {
@@ -46,7 +43,6 @@ function saveImage() {
 }
 
 function onMouseDown(event){
-	////console.log("trace2");
 	var x = event.pageX - canvas.offsetLeft;
 	var y = event.pageY - canvas.offsetTop;
 	ctx.moveTo(x, y);
@@ -61,16 +57,11 @@ function onMouseDown(event){
 function onMouseMove(event){
 	
 	if (drawing) {
-		////console.log("trace3");
 		var x = event.pageX - canvas.offsetLeft;
 		var y = event.pageY - canvas.offsetTop;
-		//ctx.fillStyle = "#000000";
 		canvas.mixed_color = "rgb(" + slider1.color_val + "," + slider2.color_val + "," + slider3.color_val + ")";
-
 		ctx.lineTo(x,y);
-		////console.log(ctx.strokeStyle);
 		ctx.strokeStyle = canvas.mixed_color;
-		////console.log(canvas.mixed_color);
 		ctx.stroke();
 		ctx.beginPath();
 		ctx.moveTo(x,y);
@@ -81,14 +72,6 @@ function onMouseMove(event){
 		drawingRecord["color"] = canvas.mixed_color;
 		drawingRecord["event"] = "MouseMove";
 		recordedMovements.push(drawingRecord);
-
-		/*for (var i = 0; i < recordedMovements.length; i++) {
-		  var movement = recordedMovements[i];
-		  var i_x = movement["x"];
-		  var i_y = movement["y"];
-		  var i_color = movement["color"];
-		  //console.log(i_x, i_y, i_color);
-		}*/    
 	}
 }
 
@@ -104,32 +87,11 @@ function onMouseOut(event){
 function final_merge(){
 	var userID = "ben";
 	var gameID = "0"; //placeholder variables
-	//window.location = "/static/final_image/" + gameID;
 	console.log("trace2");
 	window.location = "/share/" + userID + "/" + gameID;
-	//console.log("almost...");
 	merge_images();
-	
-	
-	/*var url_foo = "/static/finalImage";
-	$.ajax({
-		type: "get",
-		url: url_foo,
-		//data: { "id" : 1},
-		success: function(url) {
-					console.log("trace3");
-					window.location = url;
-					merge_images();
-		}, 
-		error: function(){
-			console.log("url: " + url_foo);
-		}
-	});*/
 }
 				
-	//window.location = "/share/final_image/" + gameID;
-	
-
 $(document).ready(function() {
     get();
   });

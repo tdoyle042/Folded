@@ -16,7 +16,6 @@ function get() {
 }
 
 function merge_images() {
-	//get();
 	var canvas_height = 300; //height of the canvases from each player turn
 	for (var i = 0; i < images.imageList.length; i++) {
 		var current_image = images.imageList[i]["recordedMovements"];
@@ -34,7 +33,6 @@ function merge_images() {
 
 function loadRecordedDrawings(image_index, context) {
   if (images === undefined) return ;
-  //console.log("trace10");
   console.log("images: " + images);
   if ((image_index >= 0) && (image_index < (images.imageList.length))){
 	var this_image = images.imageList[image_index];
@@ -45,9 +43,7 @@ function loadRecordedDrawings(image_index, context) {
 	return;
   }
   recordedMovements = this_image["recordedMovements"];
-  //console.log("attempt: " + recordedMovements.length);
   for (var i = 0; i < recordedMovements.length; i++) { 
-    ////console.log(i);
 	var movement = recordedMovements[i];
     var x = movement["x"];
     var y = movement["y"];
