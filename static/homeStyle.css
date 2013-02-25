@@ -16,8 +16,8 @@ canvas {
 	height:300px; */
 	box-shadow:0px 2px 15px 1px rgba(0,0,0,0.5); 
 	background-color: white;
-	position:absolute;
-	left:37%;
+	/*position:absolute;
+	left:37%;*/
 }
 
 .slider{
@@ -25,20 +25,20 @@ canvas {
 	/*margin-right: 20px;*/
 	width:25px;
 	height:300px;
-	margin-left:20px;
+	/*margin-left:20px;
 	position:relative;
-	left:-20%;
+	left:-20%;*/
 	
 }
 
-#clear_canvas, #loadRecordedDrawings, #saveRecordedDrawings, #undo, #redo {
+/*#clear_canvas, #loadRecordedDrawings, #saveRecordedDrawings, #undo, #redo {
 
   position: absolute;
   top: 460px;
 
-}
+}*/
 
-#clear_canvas {
+/*#clear_canvas {
   
   left: 600px;
 
@@ -56,4 +56,4 @@ canvas {
 
 #redo{
 	left: 1400px;
-}
+}*/
