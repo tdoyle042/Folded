@@ -18,18 +18,27 @@ app.get("/static/:staticFilename", function (request, response) {
     response.sendfile("static/" + request.params.staticFilename);
 });
 
-app.get("/share/:id", function (request,response) {
-	var imageID = request.params.id;
+//app.get("/share/:id", function (request,response) {
+//app.get("/static/final_image/:gameID", function (request,response) {
+
+app.get("/share/:userID/:gameID", function (request,response) {
+	console.log("trace1");
+	//console.log(arguments[0]);
+	response.sendfile("static/final_image_page.html");
+	//window.location = request.params.url;
+	
+});
+	/*var imageID = request.params.id;
 	if(imageID >= 0 && imageID < images.length){
 		response.send({
-						image: images[imageID],
+						//image: images[imageID],
 						success: true
 					});
 	}
 	else {
 		response.send({success:false});
 	}
-});
+});*/
 
 app.post("/saveImage", function (request,response) {
 	var gameID = request.game.id;
@@ -42,7 +51,7 @@ app.post("/saveImage", function (request,response) {
 app.get("/images", function(request,response) {
 	response.send({
 		images: images,
-		success: true
+		success: true,
 	});
 });
 

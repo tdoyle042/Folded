@@ -12,8 +12,8 @@ body {
 
 canvas {
 	
-	/*width:500px;
-	height:300px;*/
+	/* width:500px;
+	height:300px; */
 	box-shadow:0px 2px 15px 1px rgba(0,0,0,0.5); 
 	background-color: white;
 	position:absolute;
@@ -31,7 +31,7 @@ canvas {
 	
 }
 
-#clear_canvas, #loadRecordedDrawings, #saveRecordedDrawings {
+#clear_canvas, #loadRecordedDrawings, #saveRecordedDrawings, #undo, #redo {
 
   position: absolute;
   top: 460px;
@@ -54,4 +54,12 @@ canvas {
   position: absolute;
   left: 30%;
   bottom: -5%;
+}
+
+#undo {
+	left: 1200px;
+}
+
+#redo{
+	left: 1400px;
 }
