@@ -59,20 +59,19 @@ app.get("/images", function (request,response) {
 
 //posts the images you're currently saving
 app.post("/images",function (request,response) {
-	var item = { "recordedMovements": request.body.recordedMovements};
-	var successful = (item.recordedMovements !== undefined);
-	if (successful) {
-		images.imageList.push(item);
+	var movements = request.body.recordedMovements;
+	var gameid = request.body.gameid;
+
+	if (movements !== undefined && gameid !== undefined) {
+		images.push(movements);
+		games[gameid]["images"].push(images.length-1);
 		saveImages();
+		saveGames();
 	}
 	else {
-		//console.log("whoops");
-		item = undefined;
+		response.statusCode = 300;
+		response.send({success : false});
 	}
-	response.send({
-		item: item,
-		success: successful
-	});
 });
 
 app.post("/login", function (request,response) {
@@ -211,8 +210,7 @@ function readData() {
 	fs.readFile("images.txt",function(err,data) {
 		if(err) {
 			console.log("Error Reading Images");
-			images = new Object();
-			images.imageList = [];
+			images = [];
 			saveImages();
 		}
 		else {

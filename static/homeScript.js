@@ -1,8 +1,38 @@
 /* Javascript for the client home page */
+var gameid;
+var session;
+
 $(window).ready(function(){
 	console.log("ready!");
+	gameid = parseGameId();
+	session = parseSession();
+
+
+
+	if(gameid === null || session === null){
+		//Error
+	}
+
+	else {
+		$("#saveButton").click(function() {
+			saveImage(recordedMovements);
+		});
+	}
+
 });
 
+
+function saveImage(movements) {
+	$.ajax({
+		type: "post",
+		data: {
+			"gameid" : gameid,
+			"recordedMovements": movements
+		},
+		url: "/images",
+		success: function(data) { }
+	});
+}
 
 //Parse the game id from the url
 function parseGameId() {
@@ -25,12 +55,13 @@ function parseGameId() {
 function parseSession() {
 	var url = window.location.href;
 	var indexOfSession = url.indexOf("?session=");
+	var indexOfGameId = url.indexOf("&game=");
 
 	//If no session param, malformed request
-	if(indexOfSession === -1) 
+	if(indexOfSession === -1 || indexOfGameId === -1) 
 		return null;
 
-	var givenSession = url.substring(indexOfSession+9);
+	var givenSession = url.substring(indexOfSession+9,indexOfGameId);
 	var session = Number(givenSession);
 
 	//Malformed session value;
