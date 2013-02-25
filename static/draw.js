@@ -78,6 +78,7 @@ function onMouseMove(event){
 		drawingRecord["x"] = x;
 		drawingRecord["y"] = y; 
 		drawingRecord["color"] = canvas.mixed_color;
+    drawingRecord["lineWidth"] = strokeSizeSlider.stroke_val;
 		drawingRecord["event"] = "MouseMove";
 		recordedMovements.push(drawingRecord);
 	}

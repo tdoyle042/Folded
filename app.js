@@ -74,9 +74,9 @@ app.post("/images",function (request,response) {
 });
 
 app.post("/login", function (request,response) {
-	var recievedUsername = request.body.username;
-	var recievedPassword = request.body.password;
-	if(authUser(recievedUsername,recievedPassword)) {
+	var receivedUsername = request.body.username;
+	var receivedPassword = request.body.password;
+	if(authUser(receivedUsername,receivedPassword)) {
 		// response.send({success : true});
 		response.send({success : true});
 	}
