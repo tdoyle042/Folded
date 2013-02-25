@@ -168,7 +168,9 @@ app.get("/games", function (request,response) {
 	response.sendfile("static/games.html");
 });
 
-app.get("/play/:params", function (request,response) {
+app.get("/play", function (request,response) {
+	console.log(request.url);
+	//To Do Verify valid request?
 	response.sendfile("static/home.html");
 });
 

@@ -75,7 +75,7 @@ function loadGames(user,games,session) {
 				var gameID = currentGame["gameID"];
 				var mySession = session;
 
-				window.location.href = "/play/" + gameID + "?session=" + mySession;
+				window.location.href = encodeURI("/play?session=" + mySession + "&game=" + gameID);
 			});
 			turn.appendTo(gameItem);
 			drawButton.appendTo(gameItem);
