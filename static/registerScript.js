@@ -14,13 +14,15 @@ function createAccount() {
 		data : {
 			"username" : username,
 			"password" : password,
-			"realName" : name
+			"realName" : name,
+			"games" : []
 		},
 		error : function (error) {
 			//console.log(error);
 			$("#errors").html("" + error.responseText);
 		},
 		success : function (data) {
+			
 			//console.log("Created Account!");
 		},
 	});

@@ -24,7 +24,7 @@ app.get("/static/:staticFilename", function (request, response) {
 //app.get("/static/final_image/:gameID", function (request,response) {
 
 app.get("/share/:userID/:gameID", function (request,response) {
-	console.log("trace1");
+	//console.log("trace1");
 	//console.log(arguments[0]);
 	response.sendfile("static/final_image_page.html");
 	//window.location = request.params.url;
@@ -52,11 +52,11 @@ app.post("/saveImage", function (request,response) {
 //gets all saved images
 app.get("/images", function (request,response) {
 	response.send({
-		images: images,
+		//images: images,
 		success: true,
 	});
 });
-
+/*
 //posts the images you're currently saving
 app.post("/images",function (request,response) {
 	var item = { "recordedMovements": request.body.recordedMovements};
@@ -71,6 +71,37 @@ app.post("/images",function (request,response) {
 	}
 	response.send({
 		item: item,
+		success: successful
+	});
+});*/
+
+app.post("/images",function (request,response) {
+	var item = { "recordedMovements": request.body.recordedMovements};
+	//console.log("start");
+	//console.log(request.body);
+	//console.log("end");
+	var this_game = request.body.this_game;
+	//console.log("this_game:");
+	//console.log(this_game);
+	//console.log("then...");
+	//var this_game = item.this_game;
+	var successful = (item.recordedMovements !== undefined);
+	console.log(this_game);
+	if (this_game["imageList"] === undefined){
+		this_game["imageList"] = [];
+	}
+	if (successful) {
+		//console.log(this_game);
+		this_game["imageList"].push(item);		
+		saveImages();
+	}
+	else {
+		//console.log("whoops");
+		item = undefined;
+	}
+	response.send({
+		//item: item,
+		"this_game": this_game,
 		success: successful
 	});
 });
@@ -125,6 +156,21 @@ app.get("/users", function (request,response) {
 	response.send({data : users, success : true});
 });
 
+app.get("/game_users", function (request,response) {
+	//response.send({data : users, success : true});
+	var game_users = [];
+	var givenSessions = request.query.givenSessions;
+	//console.log(givenSessions);
+	for (var i = 0; i < givenSessions.length; i++){
+		var username = sessions[""+givenSessions[i]];
+		var user = users[""+username];
+		//console.log(user);
+		game_users.push(user);
+		//console.log(game_users);		
+	}
+	response.send({"users" : game_users, success : true});
+});
+
 app.get("/user", function (request,response) {
 	var givenSession = request.query.givenSession;
 	var username = sessions[""+givenSession];
@@ -142,27 +188,100 @@ app.get("/user", function (request,response) {
 });
 
 app.get("/user/games/", function (request,response) {
-	var session = request.query.session;
+	//console.log("well?");
+	var session = request.query.session;	
+	console.log(session);
 	var username = sessions[""+session];
+	console.log(username);
 	var user = users[username];
+	console.log(user);
+	//console.log(user);
+	// console.log(session);
+	// console.log(username);
+	// console.log(user);
 
 	if(user === undefined) {
+		//console.log(session);
 		console.log("Session key invalid");
 		response.statusCode = 301;
 		response.send({success : false});
 	}
 	else {
 		var allGames = [];
+		//console.log("trace4");
+		//console.log(user["games"][0]);
+		console.log(user["games"].length);
 		for(var i = 0; i < user["games"].length; i++) {
+			console.log("games:");
+			console.log(user["games"]);
 			allGames.push(games[user["games"][i]]);
 		}
+		console.log("start");
+		console.log(allGames);
 
 		response.send({
 			"games" : allGames,
+			"user" : user,
 			success : true
 		});
 	}
 });
+
+app.post("/end_turn", function (request, response){
+	var user = request.body.user;
+	console.log("ending...");
+	console.log(user);
+	var game = request.body.game;
+	var gameId = request.body.gameId;
+	console.log(game);
+	games[gameId] = game;
+	response.send({success: true});
+});
+
+/*
+//app.get("/invite/:inviterSession/:gameID", function (request, response) {
+app.get("/invite/:params1/:params2", function (request, response) {
+	console.log("foo");
+	//go to proper file
+	//send success, variable to show who invited by
+	
+	//response.send({success : true, test: false});
+	response.sendfile("static/invite.html");
+	
+});*/
+
+app.get("/invite/:inviterSession/:gameId", function (request, response) {
+	console.log("foo");
+	//go to proper file
+	//send success, variable to show who invited by
+	
+	//response.send({success : true, test: false});
+	response.sendfile("static/invite.html");
+	
+})
+
+app.post("/acceptInvite", function (request, response) {
+	console.log("trace1");
+	var gameId = request.body.gameId;
+	var inviter = request.body.inviter;
+	var invitee = request.body.invitee;
+	
+	console.log(inviter["games"]);
+	console.log(gameId);	
+	//var this_game = games[inviter["games"][gameId]];
+	var this_game = games[gameId];
+	console.log("game:");
+	console.log(this_game);
+	this_game["users"][1] = invitee;
+	
+	games[gameId]["users"][1] = invitee["username"];
+	users[invitee["username"]]["games"].push(gameId);
+	//console.log(users[invitee["username"]]["games"].length);
+	response.send({success: true});
+	//invitee["games"].push(this_game); //need to fix ID?
+	//response.send({"game" : newGame, success : true});
+})
+	
 
 app.get("/games", function (request,response) {
 	response.sendfile("static/games.html");
@@ -175,18 +294,18 @@ app.get("/play/:params", function (request,response) {
 app.post("/addGame", function (request,response) {
 	var newGame = new Object();
 	newGame["turn"] = request.body.turn;
-	newGame["imageID"] = request.body.imageID;
+	//newGame["imageList"] = request.body.imageID;
+	newGame["imageList"] = [];
 	newGame["users"] = request.body.users;
 	newGame["gameID"] = games.length;
-
-	users[newGame["users"][0]]["games"].push(newGame["gameID"]);
-
+	var updated_user = users[newGame["users"][0]];
+	updated_user["games"].push(newGame["gameID"]);
+	console.log("new game:");
+	console.log(newGame);
 	games.push(newGame);
 	saveGames();
 	saveUsers();
-	response.send({"game" : newGame, success : true});
-
-
+	response.send({"updated_user" : updated_user, "game" : newGame, success : true});
 });
 
 function initServer() {
