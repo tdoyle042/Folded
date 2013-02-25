@@ -27,7 +27,11 @@ canvas {
 	height:300px;
 	/*margin-left:20px;
 	position:relative;
+<<<<<<< HEAD
 	left:-20%;*/
+=======
+	left:-22%;
+>>>>>>> 6f17128d10060468af75273b43126b6cdd18226b
 	
 }
 

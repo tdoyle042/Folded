@@ -52,7 +52,10 @@ function loadRecordedDrawings(image_index, context) {
     }
     else {
       var color = movement["color"];
+      var lineWidth = movement["lineWidth"];
       context.lineTo(x,y);
+      context.lineCap = 'round';
+      context.lineWidth = lineWidth;
       context.strokeStyle = color;
       context.stroke();
       context.beginPath();

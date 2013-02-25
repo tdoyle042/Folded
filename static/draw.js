@@ -3,6 +3,9 @@ var ctx = canvas.getContext("2d");
 var drawing = false;
 var saved_commands = [];
 
+var colorPallete = document.getElementById("colorPallete");
+var palleteCtx = colorPallete.getContext("2d");
+
 canvas.addEventListener('mousedown', onMouseDown, false); 
 canvas.addEventListener('mouseup', onMouseUp, false); 
 canvas.addEventListener('mousemove', onMouseMove, false); 
@@ -63,6 +66,9 @@ function onMouseMove(event){
 		var y = event.pageY - canvas.offsetTop;
 		canvas.mixed_color = "rgb(" + slider1.color_val + "," + slider2.color_val + "," + slider3.color_val + ")";
 		ctx.lineTo(x,y);
+		////console.log(ctx.strokeStyle);
+    ctx.lineCap = 'round';
+    ctx.lineWidth = strokeSizeSlider.stroke_val;
 		ctx.strokeStyle = canvas.mixed_color;
 		ctx.stroke();
 		ctx.beginPath();
@@ -72,6 +78,7 @@ function onMouseMove(event){
 		drawingRecord["x"] = x;
 		drawingRecord["y"] = y; 
 		drawingRecord["color"] = canvas.mixed_color;
+    drawingRecord["lineWidth"] = strokeSizeSlider.stroke_val;
 		drawingRecord["event"] = "MouseMove";
 		recordedMovements.push(drawingRecord);
 	}
