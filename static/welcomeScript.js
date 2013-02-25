@@ -3,7 +3,6 @@ $(document).ready(function() {
 		var inputUsername = $("#username").val();
 		var inputPassword = $("#password").val();
 		login(inputUsername,inputPassword);
-		return false;
 	});
 });
 
@@ -14,7 +13,12 @@ function login(username,password) {
 		data : {"username" : username,
 				"password" : password},
 		success : function(data) {
-			window.location.href = "/home"
+			console.log("got in!");
+			var session = data.session;
+			window.location.href = "/games?session="+session;
 		},
+		fail : function(data) {
+			console.log("failed to login :(");
+		}
 	});
 }

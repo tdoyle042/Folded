@@ -4,9 +4,11 @@ var app = express();
 var fs = require('fs');
 app.use(express.bodyParser());
 
-var images = [];
-var users = new Object();
-var games = [];
+//Database varibales
+var images;
+var users;
+var games;
+var sessions;
 
 //Routes to serve web pages
 app.get("/",function(request,response) {
@@ -39,7 +41,7 @@ app.post("/saveImage", function (request,response) {
 });
 
 //gets all saved images
-app.get("/images", function(request,response) {
+app.get("/images", function (request,response) {
 	response.send({
 		images: images,
 		success: true
@@ -65,23 +67,21 @@ app.post("/images",function (request,response) {
 });
 
 app.post("/login", function (request,response) {
+	console.log("got request to login!");
 	var recievedUsername = request.body.username;
 	var recievedPassword = request.body.password;
 	if(authUser(recievedUsername,recievedPassword)) {
-		// response.send({success : true});
-		response.send({success : true});
+		var generatedSession = Math.floor(Math.random()*100000000);
+		console.log("generated: " + generatedSession);
+		sessions[""+generatedSession] = recievedUsername;
+		response.send({"session" : generatedSession, success : true});
+		saveSessions();
 	}
 	else {
-		////console.log("failed");
+		response.statusCode = 300;
 		response.send({success : false});
 	} 
 });
-
-app.get("/home",function(request,response) {
-	response.sendfile("static/home.html");
-});
-
-
 
 app.get("/register", function (request,response) {
 	response.sendfile("static/register.html");
@@ -99,6 +99,7 @@ app.post("/register", function (request,response) {
 		newUser["username"] = recievedUsername;
 		newUser["password"] = recievedPassword;
 		newUser["name"] = recievedName;
+		newUser["games"] = new Array();
 		users[recievedUsername] = newUser;
 		saveUsers();
 		//console.log("Created the user!");
@@ -115,9 +116,69 @@ app.get("/users", function (request,response) {
 	response.send({data : users, success : true});
 });
 
-// app.get("/getImage", function (request,response) {
-// 	var gameID = request.body.id;
-// });
+app.get("/user", function (request,response) {
+	var givenSession = request.query.givenSession;
+	var username = sessions[""+givenSession];
+	var user = users[""+username];
+
+	if(user === undefined) {
+		console.log("Invalid session key, user undef!");
+		response.statusCode = 300;
+		response.send({success : false});
+	} 
+	else {
+		response.statusCode = 200;
+		response.send({"user" : user, success : true});
+	}
+});
+
+app.get("/user/games/", function (request,response) {
+	var session = request.query.session;
+	var username = sessions[""+session];
+	var user = users[username];
+
+	if(user === undefined) {
+		console.log("Session key invalid");
+		response.statusCode = 301;
+		response.send({success : false});
+	}
+	else {
+		var allGames = [];
+		for(var i = 0; i < user["games"].length; i++) {
+			allGames.push(games[user["games"][i]]);
+		}
+
+		response.send({
+			"games" : allGames,
+			success : true
+		});
+	}
+});
+
+app.get("/games", function (request,response) {
+	response.sendfile("static/games.html");
+});
+
+app.get("/play/:params", function (request,response) {
+	response.sendfile("static/home.html");
+});
+
+app.post("/addGame", function (request,response) {
+	var newGame = new Object();
+	newGame["turn"] = request.body.turn;
+	newGame["imageID"] = request.body.imageID;
+	newGame["users"] = request.body.users;
+	newGame["gameID"] = games.length;
+
+	users[newGame["users"][0]]["games"].push(newGame["gameID"]);
+
+	games.push(newGame);
+	saveGames();
+	saveUsers();
+	response.send({"game" : newGame, success : true});
+
+
+});
 
 function initServer() {
 	readData();
@@ -149,13 +210,24 @@ function readData() {
 	});
 	////console.log('getting games...');
 	fs.readFile("games.txt",function(err,data) {
-		if(err) {
+		if(err || data == undefined) {
 			console.log("Error Reading Games");
-			games = new Object();
+			games = [];
 			saveGames();
 		}
 		else {
 			games = JSON.parse(data);
+		}
+	});
+
+	fs.readFile("sessions.txt",function(err,data) {
+		if(err) {
+			console.log("Error sessions Sessions");
+			sessions = new Object();
+			saveSessions();
+		}
+		else {
+			sessions = JSON.parse(data);
 		}
 	});
 }
@@ -194,6 +266,18 @@ function saveGames() {
 			console.log("Wrote Games to Disk");
 		}
 	});
+}
+
+function saveSessions() {
+	var sessionsString = JSON.stringify(sessions);
+	fs.writeFile("sessions.txt",sessionsString,function(err){
+		if(err) {
+			console.log("Error writing Sessions to Disk");
+		}
+		else {
+			console.log("Wrote Sessions to Disk");
+		}
+	});	
 }
 
 function authUser(username,password) {
