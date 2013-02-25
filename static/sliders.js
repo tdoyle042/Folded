@@ -29,12 +29,19 @@ function draw_triangles(selector_top, context, selector_height, slider) {
 	context.fill();
 }
 
-function make_slider(slider, context, color) {
+function make_slider(slider, context, color, desc) {
 	slider.dragging = false;
 	slider.color = color;
 	slider.color_val = 0;
+  if (desc === "strokeSize") { 
+    slider.desc = "strokeSize";
+    slider.stroke_val = 0;
+  } 
+  else {
+    slider.desc = "color"
+  }
 	//TODO: Make cursor_position 0 be bottom of slider rather than top
-	slider.selector = 	function(cursor_position) {
+	slider.selector =	function(cursor_position) {
 							var selector_height = 45;
 							var top = cursor_position - (selector_height/2);
 							var bottom = top + selector_height;
@@ -64,7 +71,17 @@ function make_slider(slider, context, color) {
 							context.lineWidth=5;
 							context.stroke();
 							draw_triangles(top, context, selector_height, slider);
-							slider.color_val = Math.floor(255 - top);
+              
+              if (slider.desc === "strokeSize") {
+                slider.stroke_val = Math.floor((255 - top) / 8);
+                console.log(slider.stroke_val);
+               }
+              else {
+							  slider.color_val = Math.floor(255 - top);
+                palleteCtx.fillStyle = "rgb(" + slider1.color_val + "," + 
+                  slider2.color_val + "," + slider3.color_val + ")";
+                palleteCtx.fillRect(0, 0, 25, 25);
+              }
 							//console.log(top);
 						}		
 	slider.draw_gradient = 	function(){
@@ -117,12 +134,16 @@ function init_sliders() {
 	var ctx2=slider2.getContext("2d");
 	var slider3 = document.getElementById("slider3");
 	var ctx3 =slider3.getContext("2d");
+	strokeSizeSlider = document.getElementById("strokeSize");
+	var ctxStrokeSize = strokeSizeSlider.getContext("2d");
 	var color1 = "#ff0000";
 	var color2 = "#00ff00";
 	var color3 = "#0000ff";
+
 	make_slider(slider1, ctx1, color1);
 	make_slider(slider2, ctx2, color2);
 	make_slider(slider3, ctx3, color3);
+  make_slider(strokeSizeSlider, ctxStrokeSize, "ffffff", "strokeSize");
 	
 	//slider1.draw_gradient();
 	//slider2.draw_gradient();
@@ -136,3 +157,4 @@ function init_sliders() {
 
 init_sliders();
 canvas.mixed_color = "rgb(" + slider1.color_val + "," + slider2.color_val + "," + slider3.color_val + ")";
+canvas.stroke_size = strokeSizeSlider.stroke_val; 

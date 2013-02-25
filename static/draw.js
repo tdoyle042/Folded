@@ -2,6 +2,9 @@ var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var drawing = false;
 
+var colorPallete = document.getElementById("colorPallete");
+var palleteCtx = colorPallete.getContext("2d");
+
 canvas.addEventListener('mousedown', onMouseDown, false); 
 canvas.addEventListener('mouseup', onMouseUp, false); 
 canvas.addEventListener('mousemove', onMouseMove, false); 
@@ -99,6 +102,8 @@ function onMouseMove(event){
 
 		ctx.lineTo(x,y);
 		////console.log(ctx.strokeStyle);
+    ctx.lineCap = 'round';
+    ctx.lineWidth = strokeSizeSlider.stroke_val;
 		ctx.strokeStyle = canvas.mixed_color;
 		////console.log(canvas.mixed_color);
 		ctx.stroke();
