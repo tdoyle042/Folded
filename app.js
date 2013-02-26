@@ -110,8 +110,14 @@ app.post("/register", function (request,response) {
 		newUser["games"] = new Array();
 		users[recievedUsername] = newUser;
 		saveUsers();
+
+		var generatedSession = Math.floor(Math.random()*100000000);
+		console.log("generated: " + generatedSession);
+		sessions[""+generatedSession] = recievedUsername;
+		response.send({"session" : generatedSession, success : true});
+		saveSessions();
 		//console.log("Created the user!");
-		response.send({success : true});
+		response.send({"session" : session, success : true});
 	}
 	else {
 		//console.log("Username taken!");
@@ -176,7 +182,7 @@ app.get("/play", function (request,response) {
 app.post("/addGame", function (request,response) {
 	var newGame = new Object();
 	newGame["turn"] = request.body.turn;
-	newGame["imageID"] = request.body.imageID;
+	newGame["images"] = request.body.images;
 	newGame["users"] = request.body.users;
 	newGame["gameID"] = games.length;
 

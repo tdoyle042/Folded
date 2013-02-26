@@ -21,7 +21,7 @@ function createAccount() {
 			$("#errors").html("" + error.responseText);
 		},
 		success : function (data) {
-			//console.log("Created Account!");
+			window.location.href = "/games?session=" + data.session;
 		},
 	});
 }

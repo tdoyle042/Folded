@@ -7,8 +7,6 @@ $(window).ready(function(){
 	gameid = parseGameId();
 	session = parseSession();
 
-
-
 	if(gameid === null || session === null){
 		//Error
 	}
@@ -30,7 +28,9 @@ function saveImage(movements) {
 			"recordedMovements": movements
 		},
 		url: "/images",
-		success: function(data) { }
+		success: function(data) { 
+			console.log("posted image");
+		}
 	});
 }
 

@@ -8,7 +8,7 @@ function getPageData() {
 
 	if(session === null) {
 		$("#gamesTitle").html("Error!");
-		$("#errorMessage").html("Invalid Session, Please ").append("<a href='/login'>Login</a> Again!");
+		$("#errorMessage").html("Invalid Session, Please ").append("<a href='/'>Login</a> Again!");
 	}
 
 	else {
@@ -66,7 +66,7 @@ function loadGames(user,games,session) {
 		console.log(currentGame["turn"]);
 		console.log(user);
 		var isTurn = (user["username"] === currentGame["turn"]);
-		var turn = $("<p>");
+		var turn = $("<div>").addClass("gameStatus");
 		if(isTurn) {
 			turn.html("Your Turn!");
 			var drawButton = $("<button>");
@@ -90,14 +90,14 @@ function loadGames(user,games,session) {
 
 }
 
-function addGame(id,turn,image,users) {
+function addGame(id,turn,images,users) {
 	$.ajax({
 		type : "post",
 		url : "/addGame",
 		data : {
 			"id" : id,
 			"turn" : turn,
-			"imageID" : image,
+			"images" : images,
 			"users" : users
 		},
 		success : function(data) {

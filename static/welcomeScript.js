@@ -4,6 +4,10 @@ $(document).ready(function() {
 		var inputPassword = $("#password").val();
 		login(inputUsername,inputPassword);
 	});
+
+	$("#register").click(function(){
+		window.location.href="/register";
+	})
 });
 
 function login(username,password) {

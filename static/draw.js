@@ -33,18 +33,13 @@ function clearCanvas() {
 function add(){
 	console.log(images);
 	if (recordedMovements === []) return;
-	$.ajax({
-		type: "post",
-		data: {"recordedMovements": recordedMovements},
-		url: "/images",
-		success: function(data) { }
-	});
+	
 }
 
-function saveImage() {
-	add();
-	get();
-}
+// function saveImage() {
+// 	add();
+// 	get();
+// }
 
 function onMouseDown(event){
 	var x = event.pageX - canvas.offsetLeft;
