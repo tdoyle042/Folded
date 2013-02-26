@@ -1,5 +1,5 @@
 /* CSS file for our app */
-*{
+* {
 	-webkit-user-select: none;
 }
 
@@ -24,35 +24,12 @@ canvas {
 	
 }
 
-/*#clear_canvas, #loadRecordedDrawings, #saveRecordedDrawings, #undo, #redo {
-
-  position: absolute;
-  top: 460px;
-
-}*/
-
-/*#clear_canvas {
-  
-  left: 600px;
-
-}
-
-#saveRecordedDrawings  {
-  
-  left: 800px;
-
-}
-
 #colorPallete {
-  position: absolute;
-  left: 30%;
-  top: 55%;
+	width: 25px;
+	height: 25px;
 }
 
-#undo {
-	left: 1200px;
+#myCanvas {
+	width: 500px;
+	height:300px;
 }
-
-#redo{
-	left: 1400px;
-}*/

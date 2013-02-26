@@ -11,6 +11,13 @@ var ctx2=slider2.getContext("2d");
 var color_1 = "#00ff00";
 var color_2 = "#ff0000";
 */
+
+$(document).ready(function() {
+	init_sliders();
+	canvas.mixed_color = "rgb(" + slider1.color_val + "," + slider2.color_val + "," + slider3.color_val + ")";
+	canvas.stroke_size = strokeSizeSlider.stroke_val; 
+});
+
 function draw_triangles(selector_top, context, selector_height, slider) {
 	var tri_top_y = selector_top + (selector_height * (3/8));
 	var tri_top_x = 0;
@@ -143,7 +150,7 @@ function init_sliders() {
 	make_slider(slider1, ctx1, color1);
 	make_slider(slider2, ctx2, color2);
 	make_slider(slider3, ctx3, color3);
-  make_slider(strokeSizeSlider, ctxStrokeSize, "ffffff", "strokeSize");
+  	make_slider(strokeSizeSlider, ctxStrokeSize, "ffffff", "strokeSize");
 	
 	//slider1.draw_gradient();
 	//slider2.draw_gradient();
@@ -155,6 +162,4 @@ function init_sliders() {
 
 
 
-init_sliders();
-canvas.mixed_color = "rgb(" + slider1.color_val + "," + slider2.color_val + "," + slider3.color_val + ")";
-canvas.stroke_size = strokeSizeSlider.stroke_val; 
+

@@ -3,6 +3,7 @@
 	<head>
 		<script src="../static/jquery-1.9.0.min.js" type="text/javascript"></script>
 		<script src="../static/homeScript.js" type="text/javascript"></script>
+		
 		<link rel="stylesheet" type="text/css" href="../static/app.css">
 		<link rel="stylesheet" href="../static/homeStyle.css" type="text/css">
 	</head>
@@ -12,22 +13,23 @@
       <!--<canvas class="slider" id="strokeSlider" width="25" height="300"></canvas>
       <input type="submit" id="stroke_size" value="Stroke Size" 
         onClick="javascript:showStrokeSizeSlider"/> --> 
-			<span id="tools"></span>
-      <canvas class="slider" id="strokeSize" width="25" height="300"></canvas>
-			<canvas class="slider" id="slider1" width="25" height="300" ></canvas>
-			<canvas class="slider" id="slider2" width="25" height="300"></canvas>
-			<canvas class="slider" id="slider3" width="25" height="300"></canvas>
-			<canvas id="colorPallete" width="25" height="25"></canvas>
-			<canvas id="myCanvas" width="500" height="300">
+			<span id="tools">
+	      		<canvas class="slider" id="strokeSize" width="25" height="300"></canvas>
+				<canvas class="slider" id="slider1"></canvas>
+				<canvas class="slider" id="slider2"></canvas>
+				<canvas class="slider" id="slider3"></canvas>
+				<canvas id="colorPallete"></canvas>
+			</span>
+			<canvas id="myCanvas">
 				Sorry, your browser does not support canvas :(
 			</canvas>
 		</span>
 		<div>
 		<input type="submit" id="clearButton" value="Clear Canvas" 
 			onClick="javascript:clearCanvas()"/>
-		<input type="submit" id="loadButton" value="Final Merge"
-            onClick="javascript:final_merge()"/>
-		<input type="submit" id="saveButton" value="Save drawing"/>
+	<!-- 	<input type="submit" id="loadButton" value="Final Merge"
+            onClick="javascript:final_merge()"/> -->
+		<!-- <input type="submit" id="saveButton" value="Save drawing"/> -->
 		<input type="submit" id="undoButton" value="Undo"
             onClick="javascript:undo()"/>
 		<input type="submit" id="redoButton" value="Redo"
@@ -36,13 +38,12 @@
 			<div id="inputDescr">
 				<form>
 					<input type="textfield" name="yourDesc" hint="Type your description here!" />
-					<input type="submit" value="Submit">
+					<input id="endTurnBtn" type="submit" value="Submit">
 				</form>
 			</div>
 		</div>
+		<script src="../static/draw.js" type="text/javascript"></script>
+		<script src="../static/undo_redo.js" type="text/javascript"></script>
+		<script src="../static/sliders.js" type="text/javascript"></script>
 	</body>
-	<script src="../static/draw.js" type="text/javascript"></script>
-	<script src="../static/undo_redo.js" type="text/javascript"></script>
-	<script src="../static/sliders.js" type="text/javascript"></script>
-	
 </html>

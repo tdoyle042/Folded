@@ -10,26 +10,25 @@ $(window).ready(function(){
 	if(gameid === null || session === null){
 		//Error
 	}
-
 	else {
-		$("#saveButton").click(function() {
-			saveImage(recordedMovements);
+		$("#endTurnBtn").click(function() {
+			endTurn();
 		});
 	}
-
 });
 
-
-function saveImage(movements) {
+function endTurn() {
 	$.ajax({
 		type: "post",
+		url: "/turn",
 		data: {
+			"session" : session,
 			"gameid" : gameid,
-			"recordedMovements": movements
+			"image": recordedMovements
 		},
-		url: "/images",
 		success: function(data) { 
 			console.log("posted image");
+			window.location.href = "/games?session=" + session;
 		}
 	});
 }

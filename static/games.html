@@ -3,31 +3,19 @@
 	<head>
 		<script src="static/jquery-1.9.0.min.js" type="text/javascript"></script>
 		<script type="text/javascript" src="static/games.js"></script>
+		<link rel="stylesheet" type="text/css" href="static/app.css">
 		<link rel="stylesheet" type="text/css" href="static/games.css">
 	</head>
 	<body>
 		<div id="content">
 			<h1 id="gamesTitle"></h1>
 			<h2 id="errorMessage"></h2>
+			<!-- <button>New Game</button> or -->
+			<button id="inviteBtn">Invite A Friend</button>
+			<input type="textfield" id="inviteUrl" hint="Type your description here!" value="hey"/>
 			<ul>
-				<!-- <li>
-					<h3 class="gameTitle">You and Sara</h3>
-					<div class="gameStatus">Your turn!</div>
-					<button>Play!</button>
-				</li>
-				<li>
-					<h3 class="gameTitle">You and Ryan</h3>
-					<div class="gameStatus">His turn!</div>
-				</li>
-				<li>
-					<h3 class="gameTitle">You and Hanna</h3>
-					<div class="gameStatus">Finished!</div>
-					<button>View!</button>
-				</li> -->
 			</ul>
 		</div>
-		<input type="submit" id="inviteButton" value="Invite a Friend"
-        onClick="javascript:invite_url()"/>
-		<input type="textfield" id="inviteUrl" hint="Type your description here!" value="hey"/>
+		
 	</body>
 </html>
