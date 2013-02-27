@@ -1,5 +1,5 @@
 /* CSS file for our app */
-* {
+canvas, .slider, #colorPallete, #myCanvas {
 	-webkit-user-select: none;
 }
 
