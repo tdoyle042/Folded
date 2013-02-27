@@ -34,11 +34,11 @@ function login(username,password) {
 					url : "/invite",
 					data : {
 						"invite" : invite,
-						"session": data.session
+						"session": session
 					},
 					success : function(data){
 						console.log("Accepted invite successfully!");
-						window.location.href = "/games?session="+session;
+						window.location.href = "/games?session=" + session;
 					}
 				})
 			}

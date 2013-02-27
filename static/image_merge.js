@@ -44,39 +44,40 @@ function merge_images(this_game) {
 	game = this_game;
 	console.log("this_game:" + this_game);
 	var game_images = this_game["imageList"];
-	console.log("game_images:" + game_images);
+	//console.log("game_images: " + game_images);
+	//console.log("first image: " + game_images[0]);
+	console.log(game_images[0]);
 	var canvas_height = 300; //height of the canvases from each player turn
 	console.log("game_images_length:" + game_images.length);
-	for (var i = 0; i < game_images.length; i++) {
-		
-		var current_image = game_images[i]["recordedMovements"];
+	for (var imageNum = 0; imageNum < game_images.length; imageNum++) {
+		var current_image = game_images[imageNum];
 		console.log("current_images:" + current_image);
-		for (var j = 0; j < current_image.length; j++){
-			var this_move = current_image[j];
-			var y_offset = i * canvas_height;
-			this_move["y"] = String(parseInt(this_move["y"]) + y_offset);
+		for (var commandNum = 0; commandNum < current_image.length; commandNum++){
+			var this_command = current_image[commandNum];
+			var y_offset = imageNum * canvas_height;
+			this_command["y"] = String(parseInt(this_command["y"]) + y_offset);
 		}
 	}
-	for (var image_index = 0; image_index < 4; image_index++){
-		loadRecordedDrawings(image_index, final_ctx, game_images);
+	for (var imageNum = 0; imageNum < game_images.length ; imageNum++){
+		loadRecordedDrawings(imageNum, final_ctx, game_images);
 	}
 }
 
 
-function loadRecordedDrawings(image_index, context, game_images) {
+function loadRecordedDrawings(imageNum, context, game_images) {
   //if (images === undefined) return ;
   //console.log("images: " + images);
-  if ((image_index >= 0) && (image_index < (game_images.length))){
-	var this_image = game_images[image_index];
+  if ((imageNum >= 0) && (imageNum < (game_images.length))){
+	var this_image = game_images[imageNum];
   }
   else{
-	console.log("index: " + image_index);	
+	console.log("index: " + imageNum);	
 	console.log("invalid image");
 	return;
   }
-  recordedMovements = this_image["recordedMovements"];
-  for (var i = 0; i < recordedMovements.length; i++) { 
-	var movement = recordedMovements[i];
+  recordedMovements = this_image;
+  for (var commandNum = 0; commandNum < recordedMovements.length; commandNum++) { 
+	var movement = recordedMovements[commandNum];
     var x = movement["x"];
     var y = movement["y"];
     if (movement["event"] === "MouseDown") {

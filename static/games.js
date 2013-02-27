@@ -54,8 +54,22 @@ function getUser(session) {
 			current_user = data.user;
 			console.log("current_user: ",current_user);
 			console.log("current_user[games]: ",current_user["games"]);
-			$("#gamesTitle").html("" + data.user["name"]+ "'s Games:");
-			getGames(data.user,session);
+			$("#gamesTitle").html("" + current_user["name"]+ "'s Games:");
+			$.ajax({
+				type : "get",
+				data : { "this_user" : current_user},
+				url : "/send_invitation",
+				success : function(data){
+					var invite_url = data.invitation_url;
+					if (invite_url === "No Pending Invites"){
+						$("#inviteUrl").val(invite_url);
+					}
+					else{
+						$("#inviteUrl").val(window.location + invite_url);
+					}
+					getGames(data.user,session);
+				}			
+			});
 		}
 	});
 }
@@ -108,12 +122,25 @@ function newGame(turns) {
 		type : "post",
 		url : "/newGame",
 		data : {
-			"turns" : turns,
+			"numTurns" : turns,			
 			"username" : current_user["username"]
 		},
 		success : function(data) {
 			console.log("Created a new game!");
-			$("#inviteUrl").val("" + window.location.origin + "/?invite="+data.invite);
+			
+			//window.location = window.location;
+			var invite_url = "" + window.location.origin + "/?invite="+data.invite;
+			$("#inviteUrl").val(invite_url);
+			$.ajax({
+				type: "post",
+				data: {"invite_url" : invite_url,
+						"this_user" : current_user["username"]},
+				url: "/send_invitation",
+				success: function(data){
+					window.location = window.location;
+				}
+			});
+			//getPageData();
 		}
 	});
 }

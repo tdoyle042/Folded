@@ -125,8 +125,8 @@ function onMouseMove(event){
 		canvas.mixed_color = "rgb(" + slider1.color_val + "," + slider2.color_val + "," + slider3.color_val + ")";
 		ctx.lineTo(x,y);
 		////console.log(ctx.strokeStyle);
-    ctx.lineCap = 'round';
-    ctx.lineWidth = strokeSizeSlider.stroke_val;
+		ctx.lineCap = 'round';
+		ctx.lineWidth = strokeSizeSlider.stroke_val;
 		ctx.strokeStyle = canvas.mixed_color;
 		ctx.stroke();
 		ctx.beginPath();
@@ -136,7 +136,7 @@ function onMouseMove(event){
 		drawingRecord["x"] = x;
 		drawingRecord["y"] = y; 
 		drawingRecord["color"] = canvas.mixed_color;
-    drawingRecord["lineWidth"] = strokeSizeSlider.stroke_val;
+		drawingRecord["lineWidth"] = strokeSizeSlider.stroke_val;
 		drawingRecord["event"] = "MouseMove";
 		recordedMovements.push(drawingRecord);
 	}
