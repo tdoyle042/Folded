@@ -8,6 +8,8 @@
 		<link rel="stylesheet" href="../static/homeStyle.css" type="text/css">
 	</head>
 	<body>
+    <div id="description">
+    </div>
 		<span id="drawingArea">
 			<div id="theirDesc"></div>
       <!--<canvas class="slider" id="strokeSlider" width="25" height="300"></canvas>
@@ -49,7 +51,8 @@
             onClick="javascript:redo()"/>
 		
 			<div id="inputDescr">				
-				<input type="textfield" name="yourDesc" hint="Type your description here!" />
+				<input type="textfield" name="yourDesc" id="yourDesc" 
+                                          hint="Type your description here!" />
 				<input id="endTurnBtn" type="submit" value="Submit">				
 			</div>
 		</div>

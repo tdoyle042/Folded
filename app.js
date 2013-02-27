@@ -212,6 +212,8 @@ app.get("/user/games/", function (request,response) {
 			console.log(user["games"]);
 			allGames.push(games[user["games"][i]]);
 		}
+    console.log("all games...");
+    console.log(allGames);
 		// console.log("start");
 		// console.log(allGames);
 
@@ -228,6 +230,7 @@ app.post("/turn", function (request, response){
 	var session = request.body.session;
 	var gameId = request.body.gameId;
 	var image = request.body.image;
+  var description = request.body.description;
 	console.log("session: " + session);
 	console.log("gameId: " + gameId);
 	if (image === undefined) {
@@ -235,6 +238,12 @@ app.post("/turn", function (request, response){
 	}
 	//console.log("image: " + image);
 	var game = games[gameId];
+
+  //This currently overwrites itself on each call, so you only have 
+  //access to the last description, which is the desired effect
+  games[gameId]["descriptions"];
+  games[gameId]["descriptions"].push(description);
+  console.log(games[gameId]["descriptions"]);
 	var user = sessions[session];
 	//console.log("image: " + image);
 	//console.log("game: " + game);
@@ -375,6 +384,7 @@ app.post("/newgame", function (request,response) {
 	newGame["users"][0] = username;
 	newGame["users"][1] = "pending";
 	newGame["gameID"] = games.length;
+  newGame["descriptions"] = [];
 	newGame["numTurns"] = request.body.numTurns;
 	newGame["turnNum"] = 0;
 	var user1 = users[newGame["users"][0]];
