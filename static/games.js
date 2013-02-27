@@ -75,6 +75,7 @@ function getUser(session) {
 }
 
 function loadGames(games, session) {
+	$("#games").html("");
 	console.log(games.length);
 	for(var i = 0; i < games.length; i++) {
 		var currentGame = games[i];
@@ -130,6 +131,7 @@ function newGame(turns) {
 			
 			//window.location = window.location;
 			var invite_url = "" + window.location.origin + "/?invite="+data.invite;
+			console.log(window.location.origin);
 			$("#inviteUrl").val(invite_url);
 			$.ajax({
 				type: "post",
@@ -137,7 +139,7 @@ function newGame(turns) {
 						"this_user" : current_user["username"]},
 				url: "/send_invitation",
 				success: function(data){
-					window.location = window.location;
+					getPageData();
 				}
 			});
 			//getPageData();
