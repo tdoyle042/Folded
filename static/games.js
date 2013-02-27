@@ -62,10 +62,13 @@ function getUser(session) {
 				success : function(data){
 					var invite_url = data.invitation_url;
 					if (invite_url === "No Pending Invites"){
+						$("#inviteUrl").val("");
 						$("#inviteUrl").val(invite_url);
 					}
 					else{
-						$("#inviteUrl").val(window.location + invite_url);
+						$("#inviteUrl").val("");
+						//$("#inviteUrl").val(window.location.origin + invite_url);
+						$("#inviteUrl").val(invite_url);
 					}
 					getGames(data.user,session);
 				}			
@@ -131,7 +134,9 @@ function newGame(turns) {
 			
 			//window.location = window.location;
 			var invite_url = "" + window.location.origin + "/?invite="+data.invite;
-			console.log(window.location.origin);
+			console.log(window.location);
+			$("#inviteUrl").val("");
+			console.log("old url cleared!");
 			$("#inviteUrl").val(invite_url);
 			$.ajax({
 				type: "post",
