@@ -83,7 +83,7 @@ function make_slider(slider, context, color, desc) {
                 //console.log(slider.stroke_val);
                }
               else {
-				slider.color_val = Math.floor(255 - top);
+				        slider.color_val = Math.floor(255 - top);
                 palleteCtx.fillStyle = "rgb(" + slider1.color_val + "," + 
                 slider2.color_val + "," + slider3.color_val + ")";
                 palleteCtx.fillRect(0, 0, 25, 25);
@@ -149,7 +149,7 @@ function init_sliders() {
 	make_slider(slider1, ctx1, color1);
 	make_slider(slider2, ctx2, color2);
 	make_slider(slider3, ctx3, color3);
-  	make_slider(strokeSizeSlider, ctxStrokeSize, "ffffff", "strokeSize");
+  make_slider(strokeSizeSlider, ctxStrokeSize, "ffffff", "strokeSize");
 	
 	//slider1.draw_gradient();
 	//slider2.draw_gradient();
