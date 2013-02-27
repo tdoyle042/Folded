@@ -140,10 +140,8 @@ app.post("/register", function (request,response) {
 		var generatedSession = Math.floor(Math.random()*100000000);
 		console.log("generated: " + generatedSession);
 		sessions[""+generatedSession] = recievedUsername;
-		response.send({"session" : generatedSession, success : true});
 		saveSessions();
-		//console.log("Created the user!");
-		response.send({"session" : session, success : true});
+		response.send({"session" : generatedSession, success : true});
 	}
 	else {
 		//console.log("Username taken!");
@@ -223,14 +221,19 @@ app.get("/user/games/", function (request,response) {
 });
 
 app.post("/turn", function (request, response){
+	console.log("Got request");
 	var session = request.body.session;
 	var image = request.body.image;
-	var gameId = request.body.gameId;
+	var gameID = request.body.gameId;
+	var desc = request.body.desc;
 
-	var game = games[gameId];
+	var game = games[gameID];
 	var user = sessions[session];
 
+	console.log(game,user,image,desc);
+
 	if(game === undefined || user === undefined || image === undefined) {
+		console.log("error ending turn;");
 		response.statusCode = 300;
 		response.send({success : false});
 		return;
@@ -238,6 +241,7 @@ app.post("/turn", function (request, response){
 
 	game["imageList"].push(image);
 	var users = game["users"];
+	game["description"] = description
 
 	if(game["turn"] === users[0])
 		game["turn"] = users[1];
@@ -250,6 +254,7 @@ app.post("/turn", function (request, response){
 	else
 		game["turnNum"]++;
 
+	console.log("ended turn");
 	response.send({success: true});
 });
 
@@ -312,7 +317,7 @@ app.get("/games", function (request,response) {
 	response.sendfile("static/games.html");
 });
 
-app.get("/play/:params", function (request,response) {
+app.get("/play", function (request,response) {
 	response.sendfile("static/home.html");
 });
 
@@ -328,6 +333,7 @@ app.post("/newgame", function (request,response) {
 	newGame["gameID"] = games.length;
 	newGame["numTurns"] = request.body.numTurns;
 	newGame["turnNum"] = 0;
+	newGame["description"] = "";
 	var user1 = users[newGame["users"][0]];
 	user1["games"].push(newGame["gameID"]);
 

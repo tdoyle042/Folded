@@ -8,22 +8,27 @@ $(window).ready(function(){
 	session = parseSession();
 
 	if(gameid === null || session === null){
-		//Error
+		console.log("error");
 	}
 	else {
+		console.log(gameid,session);
 		$("#endTurnBtn").click(function() {
+			console.log("pressed");
 			endTurn();
 		});
 	}
 });
 
 function endTurn() {
+	var description = $("#yourDesc").val();
+	console.log("endTurn");
 	$.ajax({
 		type: "post",
 		url: "/turn",
 		data: {
 			"session" : session,
 			"gameid" : gameid,
+			"desc" : description,
 			"image": recordedMovements
 		},
 		success: function(data) { 
