@@ -17,7 +17,7 @@ $(document).ready(function() {
 	canvas.mixed_color = "rgb(" + slider1.color_val + "," + slider2.color_val + "," + slider3.color_val + ")";
 	canvas.stroke_size = strokeSizeSlider.stroke_val; 
 });
-
+/*
 function draw_triangles(selector_top, context, selector_height, slider) {
 	var tri_top_y = selector_top + (selector_height * (3/8));
 	var tri_top_x = 0;
@@ -35,7 +35,7 @@ function draw_triangles(selector_top, context, selector_height, slider) {
 	context.fillStyle = "#fff";
 	context.fill();
 }
-
+*/
 function make_slider(slider, context, color, desc) {
 	slider.dragging = false;
 	slider.color = color;
@@ -45,7 +45,7 @@ function make_slider(slider, context, color, desc) {
     slider.stroke_val = 0;
   } 
   else {
-    slider.desc = "color"
+    slider.desc = "color";
   }
 	//TODO: Make cursor_position 0 be bottom of slider rather than top
 	slider.selector =	function(cursor_position) {
@@ -58,8 +58,7 @@ function make_slider(slider, context, color, desc) {
 							}
 							else if (top <= 0){
 								top = 0;
-								bottom = selector_height;
-								
+								bottom = selector_height;								
 							}
 							context.beginPath();
 							context.strokeStyle = "#ffffff";
@@ -75,18 +74,18 @@ function make_slider(slider, context, color, desc) {
 							context.moveTo(0, bottom);	
 							
 							context.lineTo(0,top);	//left line
-							context.lineWidth=5;
+							context.lineWidth = 5;
 							context.stroke();
-							draw_triangles(top, context, selector_height, slider);
+							//draw_triangles(top, context, selector_height, slider);
               
               if (slider.desc === "strokeSize") {
-                slider.stroke_val = Math.floor((255 - top) / 8);
-                console.log(slider.stroke_val);
+                slider.stroke_val = Math.floor((255 - top) / 8) + 1;
+                //console.log(slider.stroke_val);
                }
               else {
-							  slider.color_val = Math.floor(255 - top);
+				slider.color_val = Math.floor(255 - top);
                 palleteCtx.fillStyle = "rgb(" + slider1.color_val + "," + 
-                  slider2.color_val + "," + slider3.color_val + ")";
+                slider2.color_val + "," + slider3.color_val + ")";
                 palleteCtx.fillRect(0, 0, 25, 25);
               }
 							//console.log(top);
@@ -140,8 +139,8 @@ function init_sliders() {
 	var slider2 = document.getElementById("slider2");
 	var ctx2=slider2.getContext("2d");
 	var slider3 = document.getElementById("slider3");
-	var ctx3 =slider3.getContext("2d");
-	strokeSizeSlider = document.getElementById("strokeSize");
+	var ctx3 = slider3.getContext("2d");
+	var strokeSizeSlider = document.getElementById("strokeSizeSlider"); //To global or not to global...?
 	var ctxStrokeSize = strokeSizeSlider.getContext("2d");
 	var color1 = "#ff0000";
 	var color2 = "#00ff00";

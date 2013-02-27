@@ -14,6 +14,7 @@ var invites;
 //Routes to serve web pages
 app.get("/",function(request,response) {
 	//response.sendfile("static/home.html");
+	console.log("Welcome!");
 	response.sendfile("static/welcome.html");
 });
 
@@ -221,17 +222,21 @@ app.get("/user/games/", function (request,response) {
 });
 
 app.post("/turn", function (request, response){
-	console.log("Got request");
+	console.log("ending turn");
 	var session = request.body.session;
+	var gameId = request.body.gameId;
 	var image = request.body.image;
-	var gameID = request.body.gameId;
-	var desc = request.body.desc;
-
-	var game = games[gameID];
+	console.log("session: " + session);
+	console.log("gameId: " + gameId);
+	if (image === undefined) {
+		image = [];
+	}
+	//console.log("image: " + image);
+	var game = games[gameId];
 	var user = sessions[session];
-
-	console.log(game,user,image,desc);
-
+	//console.log("image: " + image);
+	//console.log("game: " + game);
+	console.log("user: " + user);
 	if(game === undefined || user === undefined || image === undefined) {
 		console.log("error ending turn;");
 		response.statusCode = 300;
@@ -248,14 +253,30 @@ app.post("/turn", function (request, response){
 	else
 		game["turn"] = users[0];
 
-	game["turnNum"]++;
-	if(game["turnNum"] === game["numTurns"])
+	//game["turnNum"]++;
+	// console.log("turnNum: " + game["turnNum"]);
+	// console.log("numTurns: " + game["numTurns"]);
+	// console.log("status: " + game["status"]);
+	var turnNum = game["turnNum"];
+	var numTurns = game["numTurns"];
+	console.log("turnNum: " + turnNum);
+	console.log("numTurns: " + numTurns);
+	if(Number(turnNum) === Number(numTurns)){
+		console.log("DONE WITH GAME!");
 		game["status"] = "done";
-	else
+		//final_merge();
+		
+	}
+	else{
+		console.log("game not over");
 		game["turnNum"]++;
-
-	console.log("ended turn");
-	response.send({success: true});
+	}
+	console.log("status: " + game["status"]);
+	console.log("turnNum: " + game["turnNum"] + "\n");
+	//console.log("imageList:" + game["imageList"]);
+	//console.log(game);
+	response.send({"status": game["status"],
+					success: true});
 });
 
 /*
@@ -279,6 +300,28 @@ app.get("/invite/:params1/:params2", function (request, response) {
 // 	response.sendfile("static/invite.html");
 	
 // })
+
+app.post("/send_invitation", function (request, response) {
+	var pending_invitation_url = request.body.invite_url;
+	var this_user = request.body.this_user;
+	users[this_user]["pending_invitation_url"] = pending_invitation_url;
+	response.send({success: true});
+});
+
+app.get("/send_invitation", function (request, response) {
+	var this_user = request.query.this_user;
+	console.log(this_user);
+	var invitation_url = users[this_user["username"]]["pending_invitation_url"];
+	if (invitation_url === undefined){
+		var message = "No Pending Invites";
+		response.send({"invitation_url" : message,
+						success : true});
+	}
+	else{
+		response.send({"invitation_url" : invitation_url,
+						success : true});
+	}
+});
 
 app.post("/invite", function (request, response) {
 	console.log("Invite post seen!");
@@ -310,10 +353,11 @@ app.post("/invite", function (request, response) {
 	saveUsers();
 
 	response.send({success: true});
-})
+});
 	
 
 app.get("/games", function (request,response) {
+	console.log("Opening user's game page...");
 	response.sendfile("static/games.html");
 });
 

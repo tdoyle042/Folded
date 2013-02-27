@@ -8,32 +8,43 @@ $(window).ready(function(){
 	session = parseSession();
 
 	if(gameid === null || session === null){
-		console.log("error");
+		console.log("id or session is null");
+		console.log("id: " + gameid);
+		console.log("session: " + session);
+		
+		//Error
 	}
 	else {
-		console.log(gameid,session);
-		$("#endTurnBtn").click(function() {
-			console.log("pressed");
+		console.log("no initial null errors!");
+		$("#endTurnBtn").click(function() {			
+			console.log("beginning to submit");
 			endTurn();
 		});
 	}
 });
 
 function endTurn() {
-	var description = $("#yourDesc").val();
-	console.log("endTurn");
+	console.log(gameid);
+	console.log("image: " + recordedMovements);
 	$.ajax({
 		type: "post",
 		url: "/turn",
 		data: {
 			"session" : session,
-			"gameid" : gameid,
-			"desc" : description,
+			"gameId" : gameid,
 			"image": recordedMovements
 		},
 		success: function(data) { 
-			console.log("posted image");
-			window.location.href = "/games?session=" + session;
+			var status = data.status;
+			console.log("status: " + status);
+			if (status === "done"){
+				console.log("merging...");
+				final_merge(gameid, session);
+			}
+			else{
+				console.log("posted image");
+				window.location.href = "/games?session=" + session;
+			}
 		}
 	});
 }
@@ -41,17 +52,19 @@ function endTurn() {
 //Parse the game id from the url
 function parseGameId() {
 	var url = window.location.href;
-	var indexOfGameId = url.indexOf("&game=");
-
+	//var indexOfGameId = url.indexOf("&game=");
+	indexOfGameId = url.indexOf("/play/");
+	var indexOfSession = url.indexOf("?session=");
 	if(indexOfGameId === -1)
 		return null;
 
-	var givenGameId = url.substring(indexOfGameId+6);
+	var givenGameId = url.substring(indexOfGameId+6, indexOfSession);
+	console.log(givenGameId);
 	var gameId = Number(givenGameId);
-
+	
 	if(gameId === NaN)
 		return null;
-
+	
 	return gameId;
 }
 
@@ -59,13 +72,13 @@ function parseGameId() {
 function parseSession() {
 	var url = window.location.href;
 	var indexOfSession = url.indexOf("?session=");
-	var indexOfGameId = url.indexOf("&game=");
+	//var indexOfGameId = url.indexOf("&game=");
 
 	//If no session param, malformed request
 	if(indexOfSession === -1 || indexOfGameId === -1) 
 		return null;
 
-	var givenSession = url.substring(indexOfSession+9,indexOfGameId);
+	var givenSession = url.substring(indexOfSession+9);
 	var session = Number(givenSession);
 
 	//Malformed session value;
@@ -75,3 +88,7 @@ function parseSession() {
 	return session;
 }
 
+function final_merge(gameId, session){
+	window.location = "/share/" + "user" + session + "/" + "gameId" + gameId;
+	//return 42;
+}
