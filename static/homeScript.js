@@ -11,8 +11,11 @@ $(window).ready(function(){
 		console.log("id or session is null");
 		console.log("id: " + gameid);
 		console.log("session: " + session);
-		
-		//Error
+		$("#drawingArea > *").hide();
+      	$("#canvasActions").hide();
+      	var errormessage = $("<h1>").html("Error!");
+		errormessage.append($("<h3>").html("Invalid Request. Please <a href='/'>Login</a> again."));
+		$("#drawingArea").append(errormessage);
 	}
 	else {
     var description;
@@ -33,6 +36,13 @@ $(window).ready(function(){
           var divContent = $("<h2>").html(description);
           $("#description").append(title).append(divContent);
         }
+      },
+      error : function(data) {
+      	$("#drawingArea > *").hide();
+      	$("#canvasActions").hide();
+      	var errormessage = $("<h1>").html("Error!");
+		errormessage.append($("<h3>").html("Invalid Request. Please <a href='/'>Login</a> again."));
+		$("#drawingArea").append(errormessage);
       } 
     });
 		console.log("no initial null errors!");
@@ -193,6 +203,6 @@ function parseSession() {
 }
 
 function final_merge(gameId, session){
-	window.location = "/share/" + "user" + session + "/" + "gameId" + gameId;
+	window.location = "/share" + "?user=" + session + "&gameId=" + gameId;
 	//return 42;
 }
