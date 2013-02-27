@@ -16,8 +16,9 @@ $(window).ready(function(){
 	}
 	else {
 		console.log("no initial null errors!");
-		$("#endTurnBtn").click(function() {			
+		$("#endTurnBtn").click(function() {
 			console.log("beginning to submit");
+      
 			endTurn();
 		});
 	}
@@ -26,13 +27,15 @@ $(window).ready(function(){
 function endTurn() {
 	console.log(gameid);
 	console.log("image: " + recordedMovements);
+  var description = $("#yourDesc").val();
 	$.ajax({
 		type: "post",
 		url: "/turn",
 		data: {
 			"session" : session,
 			"gameId" : gameid,
-			"image": recordedMovements
+			"image": recordedMovements,
+      "description" : description
 		},
 		success: function(data) { 
 			var status = data.status;
