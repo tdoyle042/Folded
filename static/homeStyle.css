@@ -120,3 +120,19 @@ canvas, .slider, #colorPallete, #myCanvas {
 	width: 30px;
 	height: 30px;
 }
+
+#description > * {
+	display: inline-block;
+}
+
+#description > h3 {
+	margin-right: 14px;
+}
+
+.canvasActions {
+	margin:10px;
+}
+
+#yourDesc {
+	padding:11px;
+}

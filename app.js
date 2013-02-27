@@ -241,7 +241,7 @@ app.post("/turn", function (request, response){
 
   //This currently overwrites itself on each call, so you only have 
   //access to the last description, which is the desired effect
-  games[gameId]["descriptions"];
+  // games[gameId]["descriptions"];
   games[gameId]["descriptions"].push(description);
   console.log(games[gameId]["descriptions"]);
 	var user = sessions[session];

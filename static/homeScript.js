@@ -29,10 +29,9 @@ $(window).ready(function(){
         description = descriptionArray[descriptionArray.length - 1];
         console.log("description " + description);
         if (description !== undefined) {
-          var divContent = "<div>" + description + "</div>";
-          var descDiv = $(divContent);
-          var descriptionSection = $("#description");
-          descriptionSection.append(descDiv);
+        	var title = $("<h3>").html("Your Friend Drew: ");
+          var divContent = $("<h2>").html(description);
+          $("#description").append(title).append(divContent);
         }
       } 
     });
@@ -105,6 +104,18 @@ $(window).ready(function(){
 			$("#slider1")[0].selector(300-0);
 			$("#slider2")[0].selector(300-0);
 			$("#slider3")[0].selector(300-0);
+		});
+
+		$("#redoButton").click(function() {
+			redo();
+		});
+
+		$("#undoButton").click(function() {
+			undo();
+		});
+
+		$("#clearButon").click(function() {
+			clearCanvas();
 		});
 	}
 });

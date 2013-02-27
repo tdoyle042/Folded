@@ -29,6 +29,12 @@ h2 {
 	font-weight:400;
 }
 
+h3 {
+	color:#5C5C5C;
+	font-weight:300px;
+	font-size:14px;
+}
+
 button:hover {
 	background-color:#5CD65C;
 }
