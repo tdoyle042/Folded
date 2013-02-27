@@ -25,7 +25,7 @@ app.get("/static/:staticFilename", function (request, response) {
 //app.get("/share/:id", function (request,response) {
 //app.get("/static/final_image/:gameID", function (request,response) {
 
-app.get("/share/:userID/:gameID", function (request,response) {
+app.get("/share", function (request,response) {
 	//console.log("trace1");
 	//console.log(arguments[0]);
 	response.sendfile("static/final_image_page.html");
@@ -113,7 +113,7 @@ app.post("/login", function (request,response) {
 		saveSessions();
 	}
 	else {
-		response.statusCode = 300;
+		response.statusCode = 301;
 		response.send({success : false});
 	} 
 });

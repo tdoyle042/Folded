@@ -19,21 +19,28 @@ function get() {
 
 function get_game(){
 	var url = window.location.href;
-	var indexOfUser = url.indexOf("user");
-	var indexOfGameId = url.indexOf("gameId");
-	var user = url.substring(indexOfUser+4, indexOfGameId-1);
+	var indexOfUser = url.indexOf("?user=");
+	var indexOfGameId = url.indexOf("&gameId=");
+	var user = url.substring(indexOfUser+6,indexOfGameId);
 	console.log(user);
-	var gameId = url.substring(indexOfGameId+6);
+	var gameId = url.substring(indexOfGameId+8);
 	$.ajax({
 		type: "get",
 		data: {"session" : user},
 		url : "/user/games/",
 		success : function(data){
-					console.log("working");
-					var this_game = data.games[gameId];
-					user = data.user;
-					merge_images(this_game);
-					}
+			console.log("working");
+			var this_game = data.games[gameId];
+			user = data.user;
+			merge_images(this_game);
+		},
+		error : function(data) {
+			$("#final_image").hide();
+			var errormessage = $("<h1>").html("Error!");
+			errormessage.append($("<h3>").html("Invalid Request. Please <a href='/'>Login</a> again."));
+			$("#content").append(errormessage);
+		}
+
 	//var session = Number(givenSession);
 	//get array of all games, use URL for info
 	})
