@@ -43,8 +43,8 @@ function login(username,password) {
 				})
 			}
 		},
-		fail : function(data) {
-			console.log("failed to login :(");
+		error : function(data) {
+			$("#error").html("Incorrect Username and/or Password");
 		}
 	});
 }

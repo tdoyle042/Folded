@@ -80,6 +80,10 @@ input {
 	margin-bottom:-100px;
 }
 
+#error {
+	color:#f11919;
+}
+
 a {
 	color:#4EBA4E;
 	font-weight:300;

@@ -14,7 +14,9 @@ function getPageData() {
 
 	if(session === null) {
 		$("#gamesTitle").html("Error!");
-		$("#errorMessage").html("Invalid Session, Please ").append("<a href='/login'>Login</a> Again!");
+		$("#errorMessage").html("Invalid Session, Please ").append("<a href='/'>Login</a> Again!");
+		$("#inviteBtn").hide();
+		$("#inviteUrl").hide();
 	}
 
 	else {
@@ -73,6 +75,12 @@ function getUser(session) {
 					getGames(data.user,session);
 				}			
 			});
+		},
+		error : function(data) {
+			$("#gamesTitle").html("Error!");
+			$("#errorMessage").html("Invalid Session, Please ").append("<a href='/'>Login</a> Again!");
+			$("#inviteBtn").hide();
+			$("#inviteUrl").hide();
 		}
 	});
 }

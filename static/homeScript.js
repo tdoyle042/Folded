@@ -117,6 +117,10 @@ $(window).ready(function(){
 		$("#clearButon").click(function() {
 			clearCanvas();
 		});
+
+		$("#submitDrawing").click(function() {
+			endTurn();
+		});
 	}
 });
 

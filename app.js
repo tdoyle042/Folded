@@ -113,7 +113,7 @@ app.post("/login", function (request,response) {
 		saveSessions();
 	}
 	else {
-		response.statusCode = 300;
+		response.statusCode = 301;
 		response.send({success : false});
 	} 
 });
