@@ -13,11 +13,24 @@
       <!--<canvas class="slider" id="strokeSlider" width="25" height="300"></canvas>
       <input type="submit" id="stroke_size" value="Stroke Size" 
         onClick="javascript:showStrokeSizeSlider"/> --> 
-			<span id="tools">
-	      		<canvas class="slider" id="strokeSizeSlider" width="25" height="300"></canvas>
+        	<span id="brushSizeChooser">
+        		<canvas class="slider" id="strokeSizeSlider" width="25" height="300"></canvas>
+        	</span>
+			<span id="colorChooser">
 				<canvas class="slider" id="slider1" width="25" height="300"></canvas>
 				<canvas class="slider" id="slider2" width="25" height="300"></canvas>
 				<canvas class="slider" id="slider3" width="25" height="300"></canvas>
+				<img id="closeBtn" src="../static/Close.png">
+			</span>
+			<span id="tools">
+				<img id="brush" src="../static/Paint.png">
+				<div class="color" id="red"></div>
+				<div class="color" id="pink"></div>
+				<div class="color" id="orange"></div>
+				<div class="color" id="green"></div>
+				<div class="color" id="blue"></div>
+				<div class="color" id="purple"></div>
+				<div class="color" id="black"></div>
 				<canvas id="colorPallete" width="25" height="25"></canvas>
 			</span>
 			<canvas id="myCanvas" width="500" height="300">

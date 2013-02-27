@@ -20,6 +20,70 @@ $(window).ready(function(){
 			console.log("beginning to submit");
 			endTurn();
 		});
+
+		$("#colorChooser").hide();
+		$("#brushSizeChooser").hide();
+
+		$("#brush").click(function(){
+			console.log("Clicked brush!");
+			$("#brushSizeChooser").show();
+			$("#colorChooser").hide();
+		});
+
+		$("#brushSizeChooser").on("mouseup",function(slider){
+			$("#brushSizeChooser").hide();
+		});
+
+		$("#colorPallete").click(function(){
+			$("#colorChooser").show();
+			$("#brushSizeChooser").hide();
+		})
+
+		$("#closeBtn").click(function() {
+			$("#colorChooser").hide();
+		})
+
+		$("#red").click(function() {
+			$("#slider1")[0].selector(300-0xff);
+			$("#slider2")[0].selector(300-0x31);
+			$("#slider3")[0].selector(300-0x28);
+		});
+
+		$("#blue").click(function() {
+			$("#slider1")[0].selector(300-0x58);
+			$("#slider2")[0].selector(300-0x70);
+			$("#slider3")[0].selector(300-0xff);
+		});
+
+		$("#green").click(function() {
+			$("#slider1")[0].selector(300-0x4b);
+			$("#slider2")[0].selector(300-0xce);
+			$("#slider3")[0].selector(300-0x5b);
+		});
+
+		$("#purple").click(function() {
+			$("#slider1")[0].selector(300-0x84);
+			$("#slider2")[0].selector(300-0x42);
+			$("#slider3")[0].selector(300-0xce);
+		});
+
+		$("#orange").click(function() {
+			$("#slider1")[0].selector(300-0xff);
+			$("#slider2")[0].selector(300-0x97);
+			$("#slider3")[0].selector(300-0x00);
+		});
+
+		$("#pink").click(function() {
+			$("#slider1")[0].selector(300-0xff);
+			$("#slider2")[0].selector(300-0x6e);
+			$("#slider3")[0].selector(300-0xe9);
+		});
+
+		$("#black").click(function() {
+			$("#slider1")[0].selector(300-0);
+			$("#slider2")[0].selector(300-0);
+			$("#slider3")[0].selector(300-0);
+		});
 	}
 });
 
