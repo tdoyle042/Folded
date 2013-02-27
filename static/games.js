@@ -33,8 +33,8 @@ function getGames(user,session) {
 			"session" : session
 		},
 		success : function(data) {
-			console.log(data.games);
-			loadGames(data.games,session);
+			console.log(data.userGames);
+			loadGames(data.userGames,session);
 		},
 		fail : function(data) {
 			console.log("failed :( : " + data);
@@ -80,16 +80,14 @@ function getUser(session) {
 function loadGames(games, session) {
 	$("#games").html("");
 	console.log(games.length);
+	var buttons = new Object();
 	for(var i = 0; i < games.length; i++) {
 		var currentGame = games[i];
+		console.log("game number " + i + " :");
+		console.log(currentGame);
 		//console.log("currentGame: " + currentGame);
 		var gameItem = $("<li>");
 		gameItem.addClass("gameEntry");
-		/////
-		// console.log(currentGame);
-		// currentGame["users"][0] = user;
-		// currentGame["users"][1] = "pending...";
-		////
 		var title = $("<h2>").html(currentGame["users"][0] + " and " + currentGame["users"][1]);
 		gameItem.append(title);
 		//console.log(currentGame["turn"]);
@@ -100,13 +98,28 @@ function loadGames(games, session) {
 			turn.html("Your Turn!");
 			var drawButton = $("<button>");
 			drawButton.html("Draw!");
+			//buttons[i] = $("<button>");
+			//buttons[i].html("Draw!");
+			console.log(currentGame["users"]);
+			//drawButton.click(function(){
+			console.log("index: " + i);
+			console.log("gameID: " + currentGame["gameID"]);			
+			//buttons[i].click(function(){
+			drawButton.attr("id", i);
 			drawButton.click(function(){
+				//console.log(buttons[i]);
+				//var drawButton.gameID = currentGame["gameID"];
+				//var mySession = parseSession();
+				var id = $(this).attr("id");
+				var currentGame = games[id];
 				var gameID = currentGame["gameID"];
-				var mySession = parseSession();
-
-				window.location.href = "/play/" + gameID + "?session=" + mySession;
+				console.log("currentGame users:");
+				console.log(currentGame["users"]);
+				console.log("gameID: " + gameID);
+				window.location.href = "/play/" + gameID + "?session=" + session;
 			});
 			turn.appendTo(gameItem);
+			//buttons[i].appendTo(gameItem);
 			drawButton.appendTo(gameItem);
 		}
 		else {

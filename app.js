@@ -203,22 +203,24 @@ app.get("/user/games/", function (request,response) {
 		response.send({success : false});
 	}
 	else {
-		var allGames = [];
+		var userGames = [];
 		//console.log("trace4");
 		//console.log(user["games"][0]);
 		console.log(user["games"].length);
 		for(var i = 0; i < user["games"].length; i++) {
 			console.log("games:");
 			console.log(user["games"]);
-			allGames.push(games[user["games"][i]]);
+			userGames.push(games[user["games"][i]]);
 		}
     console.log("all games...");
-    console.log(allGames);
+    console.log(userGames);
 		// console.log("start");
-		// console.log(allGames);
-
+		// console.log(userGames);
+	console.log("games 2:");
+	console.log(games[2]);
 		response.send({
-			"games" : allGames,
+			"userGames" : userGames,
+			"games" : games,
 			"user" : user,
 			success : true
 		});
@@ -239,12 +241,12 @@ app.post("/turn", function (request, response){
 	//console.log("image: " + image);
 	var game = games[gameId];
 
-  //This currently overwrites itself on each call, so you only have 
-  //access to the last description, which is the desired effect
-  // games[gameId]["descriptions"];
-  games[gameId]["descriptions"].push(description);
-  console.log(games[gameId]["descriptions"]);
-	var user = sessions[session];
+
+	games[gameId]["descriptions"].push(description);
+	console.log(games[gameId]["descriptions"]);
+  
+	var user = sessions[session]; //SHOULD THIS GIVE A USERNAME?
+	
 	//console.log("image: " + image);
 	//console.log("game: " + game);
 	console.log("user: " + user);
@@ -280,10 +282,11 @@ app.post("/turn", function (request, response){
 		console.log("game not over");
 		game["turnNum"]++;
 	}
-	console.log("status: " + game["status"]);
-	console.log("turnNum: " + game["turnNum"] + "\n");
+	//console.log("status: " + game["status"]);
+	//console.log("turnNum: " + game["turnNum"] + "\n");
 	//console.log("imageList:" + game["imageList"]);
 	//console.log(game);
+	console.log(game);
 	response.send({"status": game["status"],
 					success: true});
 });
@@ -384,7 +387,7 @@ app.post("/newgame", function (request,response) {
 	newGame["users"][0] = username;
 	newGame["users"][1] = "pending";
 	newGame["gameID"] = games.length;
-  newGame["descriptions"] = [];
+	newGame["descriptions"] = [];
 	newGame["numTurns"] = request.body.numTurns;
 	newGame["turnNum"] = 0;
 	var user1 = users[newGame["users"][0]];
@@ -399,7 +402,8 @@ app.post("/newgame", function (request,response) {
 
 	saveGames();
 	saveUsers();
-
+	//console.log("newgame:");
+	//console.log(
 	response.send({"invite" : invite, success : true});
 });
 
@@ -535,7 +539,6 @@ function authUser(username,password) {
 
 function genInvite(gameID) {
 	var invite = undefined;
-
 	//Gen unique invite code
 	while(invite === undefined || invites[""+invite] !== undefined)
 		invite = Math.floor(Math.random()*100000000);

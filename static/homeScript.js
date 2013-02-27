@@ -23,8 +23,11 @@ $(window).ready(function(){
         "session" : session
       },
       success : function(data) {
-        var allGames = data.games;
-        var this_game = allGames[gameid];
+        var userGames = data.userGames;
+		var games = data.games;
+        var this_game = games[gameid];
+		console.log("gameid: "  + gameid);
+		console.log(this_game);
         var descriptionArray = this_game["descriptions"];
         description = descriptionArray[descriptionArray.length - 1];
         console.log("description " + description);
@@ -37,8 +40,7 @@ $(window).ready(function(){
     });
 		console.log("no initial null errors!");
 		$("#endTurnBtn").click(function() {
-			console.log("beginning to submit");
-      
+			console.log("beginning to submit");      
 			endTurn();
 		});
 
@@ -114,17 +116,17 @@ $(window).ready(function(){
 			undo();
 		});
 
-		$("#clearButon").click(function() {
+		$("#clearButton").click(function() {
 			clearCanvas();
 		});
 	}
 });
 
 function endTurn() {
-	console.log(gameid);
+	console.log("gameid: " + gameid);
 	console.log("image: " + recordedMovements);
-  var description = $("#yourDesc").val();
-  console.log(description);
+	var description = $("#yourDesc").val();
+	console.log(description);
 	$.ajax({
 		type: "post",
 		url: "/turn",
