@@ -142,7 +142,9 @@ app.post("/register", function (request,response) {
 		console.log("generated: " + generatedSession);
 		sessions[""+generatedSession] = recievedUsername;
 		saveSessions();
-		response.send({"session" : generatedSession, success : true});
+		response.send({"session" : generatedSession, success : true});		
+		//console.log("Created the user!");
+		//response.send({"session" : session, success : true});
 	}
 	else {
 		//console.log("Username taken!");
@@ -238,7 +240,6 @@ app.post("/turn", function (request, response){
 	//console.log("game: " + game);
 	console.log("user: " + user);
 	if(game === undefined || user === undefined || image === undefined) {
-		console.log("error ending turn;");
 		response.statusCode = 300;
 		response.send({success : false});
 		return;
@@ -246,7 +247,6 @@ app.post("/turn", function (request, response){
 
 	game["imageList"].push(image);
 	var users = game["users"];
-	game["description"] = description
 
 	if(game["turn"] === users[0])
 		game["turn"] = users[1];
@@ -361,7 +361,7 @@ app.get("/games", function (request,response) {
 	response.sendfile("static/games.html");
 });
 
-app.get("/play", function (request,response) {
+app.get("/play/:params", function (request,response) {
 	response.sendfile("static/home.html");
 });
 
@@ -377,7 +377,6 @@ app.post("/newgame", function (request,response) {
 	newGame["gameID"] = games.length;
 	newGame["numTurns"] = request.body.numTurns;
 	newGame["turnNum"] = 0;
-	newGame["description"] = "";
 	var user1 = users[newGame["users"][0]];
 	user1["games"].push(newGame["gameID"]);
 
