@@ -15,6 +15,27 @@ $(window).ready(function(){
 		//Error
 	}
 	else {
+    var description;
+    $.ajax({
+      type : "get",
+      url : "/user/games/",
+      data : {
+        "session" : session
+      },
+      success : function(data) {
+        var allGames = data.games;
+        var this_game = allGames[gameid];
+        var descriptionArray = this_game["descriptions"];
+        description = descriptionArray[descriptionArray.length - 1];
+        console.log("description " + description);
+        if (description !== undefined) {
+          var divContent = "<div>" + description + "</div>";
+          var descDiv = $(divContent);
+          var descriptionSection = $("#description");
+          descriptionSection.append(descDiv);
+        }
+      } 
+    });
 		console.log("no initial null errors!");
 		$("#endTurnBtn").click(function() {
 			console.log("beginning to submit");
@@ -28,6 +49,7 @@ function endTurn() {
 	console.log(gameid);
 	console.log("image: " + recordedMovements);
   var description = $("#yourDesc").val();
+  console.log(description);
 	$.ajax({
 		type: "post",
 		url: "/turn",
