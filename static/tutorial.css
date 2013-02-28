@@ -7,3 +7,8 @@
 h1 {
 	text-align:center;
 }
+
+.tutimage {
+	max-width:400px;
+	height:auto;
+}
