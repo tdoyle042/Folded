@@ -1,0 +1,38 @@
+Folded - A Collaborative Drawing Game
+Tommy Doyle (tdoyle), Ben Charas (bcharas), Jack Paparian (jpaparia)
+
+Required Elements:
+
+Javascript:
+
+Obviously javascript was used throughout our project as the main medium of programming. We used a heavy amount of javascript when dealing with the sliders and image chooser (in slider.js). We created the slider object to manage its position on the page and the colors it represents. It has methods onMouseUp, onMouseDown, drawGradient, selector, etc. This abstraction allowed for better communication between the browser events and our code for the interfaces. 
+
+We also used objects in our database models. In additions to arrays, we used objects and properties that we defined to keep data organized and easy to access. For example our user table was an object that mapped usernames to the user object which has properties of name, username, password, games, and pending invitation links. We also applied the use of objects for data storage in Games where we stored the game id, users playing that game, turn number, total number of turns in this game, and the images associated with it.
+
+Canvas:
+
+Since our game revolves around drawing, canvas was a major component of our application. Our main canvas captures movement events when the mouse is down and we use this information to draw the image and also redraw the image later on. Draw information like x, y, color, line width, and the draw event are stored. We used techniques to changes the color of the stroke as well as change the width of the stroke. Additionally we used canvas to create our sliders for the color chooser. We dynamically draw the sliders based on the cursor position. We also draw the background of the sliders by using gradients.
+
+HTML:
+
+We used a wide variety of HTML elements including: buttons, textfields, canvas, divs, spans, imgs, script, link, links, lists, header tags, etc. The drawing tools was a nice example of well formated html. The out tag is span to collect all of the tools together, then there are statically sized divs stacked on to each other as well as an image and a canvas for the brush size and color palette respectively.
+
+CSS:
+
+Our project contains a wide variety of CSS skills and techniques. We used tag, class id selectors as well as pseudo classes, background images, webfont, differing font styles, custom button styles, box shadows, border styles, etc. As an example in the games page, we used a direct decadents selector to select each game and apply a solid bottom border to create a separator. We also used a :last-child selector to make sure that the final game did not receive this styling.
+
+DOM Manipulation:
+
+We used DOM manipulation in several places to either reveal new information to the user or to dynamically hide and show other pieces of information. On the drawing page, when the user presses the brush size button, we manipulate the DOM in order to reveal the slider of the brush size. We also do the same thing for the color palette. On the games page, we asynchronously load the games and add new elements to the DOM that represent the games.
+
+jQuery:
+
+We used jQuery for many things. For many of our buttons, we definitely .click behavior for them with jQuery. We also used jQuery to easily select elements from the DOM. Referring to the games page again, we used jQuery to create new DOM elements, populate them with data, then append them to existing elements in the DOM. jQuery was also highly utilized for creating AJAX requests.
+
+AJAX Client:
+
+We used a variety of methods to fetch and receive data from the server on the client side. We authenticated by posting the given username and password via the "/login" route with a POST request. When getting user games and such we used the "/user/games" with the user info to receive the game information. In order to maintain a record of who the current user is, we created a session for the user and passed this randomized number throughout requests in order to maintain an identity for the user. We also stored other information in addition to session like user and game by passing them as parameters in GET requests for new pages via the URL. We Then parsed the arguments on the new pages when they loaded.
+
+AJAX Server:
+
+To power our program we created a variety of APIs to server information to the user. We used a variety of routes such as "/register" requests to create new users, "/endTurn" to handle the game logic, and "/saveImage" to save the image information for our application. We also persisted database information with users, games, images, sessions, and invites. We used fs.writefile and fs.readfile to both write to the hard drive and read from the hard drive so that information is maintained even when the application shuts down.
