@@ -22,6 +22,14 @@ app.get("/static/:staticFilename", function (request, response) {
     response.sendfile("static/" + request.params.staticFilename);
 });
 
+app.get("/about", function (request, response) {
+	response.sendfile("static/about.html");
+});
+
+app.get("/tutorial", function (request, response) {
+	response.sendfile("static/tutorial.html");
+});
+
 //app.get("/share/:id", function (request,response) {
 //app.get("/static/final_image/:gameID", function (request,response) {
 
