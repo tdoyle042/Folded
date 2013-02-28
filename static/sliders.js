@@ -17,25 +17,7 @@ $(document).ready(function() {
 	canvas.mixed_color = "rgb(" + slider1.color_val + "," + slider2.color_val + "," + slider3.color_val + ")";
 	canvas.stroke_size = strokeSizeSlider.stroke_val; 
 });
-/*
-function draw_triangles(selector_top, context, selector_height, slider) {
-	var tri_top_y = selector_top + (selector_height * (3/8));
-	var tri_top_x = 0;
-	var tri_middle_y = selector_top + (selector_height/2);
-	var tri_middle_x = slider.width/2;
-	var tri_bottom_x = 0
-	var tri_bottom_y = tri_top_y + (1/4);	
-	context.moveTo(tri_top_x, tri_top_y);
-	context.lineTo(tri_middle_x, tri_middle_y);
-	context.moveTo(tri_middle_x, tri_middle_y);
-	context.lineTo(tri_bottom_x, tri_bottom_y);
-	context.moveTo(tri_bottom_x, tri_bottom_y);
-	context.lineTo(tri_top_x, tri_top_y);
-	context.moveTo(tri_top_x, tri_top_y);
-	context.fillStyle = "#fff";
-	context.fill();
-}
-*/
+
 function make_slider(slider, context, color, desc) {
 	slider.dragging = false;
 	slider.color = color;

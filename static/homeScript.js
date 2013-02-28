@@ -18,37 +18,43 @@ $(window).ready(function(){
 		$("#drawingArea").append(errormessage);
 	}
 	else {
-    var description;
-    $.ajax({
-      type : "get",
-      url : "/user/games/",
-      data : {
-        "session" : session
-      },
-      success : function(data) {
-        var userGames = data.userGames;
-		var games = data.games;
-        var this_game = games[gameid];
-		console.log("gameid: "  + gameid);
-		console.log(this_game);
-        var descriptionArray = this_game["descriptions"];
-        description = descriptionArray[descriptionArray.length - 1];
-        console.log("description " + description);
-        if (description !== undefined) {
-        	var title = $("<h3>").html("Your Friend Drew: ");
-          var divContent = $("<h2>").html(description);
-          $("#description").append(title).append(divContent);
-        }
-      },
-      error : function(data) {
-      	$("#drawingArea > *").hide();
-      	$("#canvasActions").hide();
-      	var errormessage = $("<h1>").html("Error!");
-		errormessage.append($("<h3>").html("Invalid Request. Please <a href='/'>Login</a> again."));
-		$("#drawingArea").append(errormessage);
-      } 
-    });
+		var description;
+		$.ajax({
+		  type : "get",
+		  url : "/user/games/",
+		  data : {
+			"session" : session
+		  },
+		  success : function(data) {
+			var userGames = data.userGames;
+			var games = data.games;
+			var this_game = games[gameid];
+			console.log("gameid: "  + gameid);
+			console.log(this_game);
+			var descriptionArray = this_game["descriptions"];
+			description = descriptionArray[descriptionArray.length - 1];
+			console.log("description " + description);
+			if (description !== undefined) {
+				var title = $("<h3>").html("Your Friend Drew: ");
+			  var divContent = $("<h2>").html(description);
+			  $("#description").append(title).append(divContent);
+			}
+		  },
+		  error : function(data) {
+			$("#drawingArea > *").hide();
+			$("#canvasActions").hide();
+			var errormessage = $("<h1>").html("Error!");
+			errormessage.append($("<h3>").html("Invalid Request. Please <a href='/'>Login</a> again."));
+			$("#drawingArea").append(errormessage);
+		  } 
+		});
 		console.log("no initial null errors!");
+		
+		var sliderRefresh = function(){
+			$("#slider1")[0].draw_gradient();
+			$("#slider2")[0].draw_gradient();
+			$("#slider3")[0].draw_gradient();
+		}
 		$("#endTurnBtn").click(function() {
 			console.log("beginning to submit");      
 			endTurn();
@@ -77,42 +83,49 @@ $(window).ready(function(){
 		})
 
 		$("#red").click(function() {
+			sliderRefresh();
 			$("#slider1")[0].selector(300-0xff);
 			$("#slider2")[0].selector(300-0x31);
 			$("#slider3")[0].selector(300-0x28);
 		});
 
 		$("#blue").click(function() {
+			sliderRefresh();
 			$("#slider1")[0].selector(300-0x58);
 			$("#slider2")[0].selector(300-0x70);
 			$("#slider3")[0].selector(300-0xff);
 		});
 
 		$("#green").click(function() {
+			sliderRefresh();
 			$("#slider1")[0].selector(300-0x4b);
 			$("#slider2")[0].selector(300-0xce);
 			$("#slider3")[0].selector(300-0x5b);
 		});
 
 		$("#purple").click(function() {
+			sliderRefresh();
 			$("#slider1")[0].selector(300-0x84);
 			$("#slider2")[0].selector(300-0x42);
 			$("#slider3")[0].selector(300-0xce);
 		});
 
 		$("#orange").click(function() {
+			sliderRefresh();
 			$("#slider1")[0].selector(300-0xff);
 			$("#slider2")[0].selector(300-0x97);
 			$("#slider3")[0].selector(300-0x00);
 		});
 
 		$("#pink").click(function() {
+			sliderRefresh();
 			$("#slider1")[0].selector(300-0xff);
 			$("#slider2")[0].selector(300-0x6e);
 			$("#slider3")[0].selector(300-0xe9);
 		});
 
 		$("#black").click(function() {
+			sliderRefresh();
 			$("#slider1")[0].selector(300-0);
 			$("#slider2")[0].selector(300-0);
 			$("#slider3")[0].selector(300-0);
